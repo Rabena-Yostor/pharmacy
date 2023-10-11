@@ -6,7 +6,11 @@ const pharma = require('../controller/pharma');
 const patient = require('../controller/patient');
 const admin = require('../controller/adminstrator');
 
-router.get('/show', admin.showMedicine);
+router.get('/show/admin', admin.showMedicine);
+router.get('/show/patient', patient.showMedicine);
+router.get('/show/pharma', pharma.showMedicine);
+
+router.get('/view',pharma.viewMedicineDetails )
 
 
 module.exports = router;
