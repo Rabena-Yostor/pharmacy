@@ -17,4 +17,4 @@ const showMedicine = async (req, res) => {
   }
 ;
 
-
+module.exports={showMedicine};

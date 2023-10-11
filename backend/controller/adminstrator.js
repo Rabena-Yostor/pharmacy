@@ -10,7 +10,7 @@ const showMedicine = async (req, res) => {
     return res.status(404).json({error: 'no medicine'})
    }
    
-   res.status(200).json(medicines);
+   res.send({price,description,imageUrl});
  
  
   }

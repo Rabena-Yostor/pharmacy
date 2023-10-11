@@ -3,6 +3,7 @@ const Medicine = require('../models/medicine');
 
 const showMedicine = async (req, res) => {
 
+
   const medicines = await Medicine.find();
   
    if (!medicines)
@@ -10,17 +11,23 @@ const showMedicine = async (req, res) => {
     return res.status(404).json({error: 'no medicine'})
    }
    
-   res.status(200).json(medicines);
+   res.send({price,description,imageUrl});
  
  
   }
 ;
-const iewMedicineDetails = async (req, res) => {
-  try {
-    const medicines = await Medicine.find();
-    res.render('medicineDetails', { medicines });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
+const viewMedicineDetails = async (req, res) => {
+
+  
+    const view = await Medicine.find();
+    if (!view)
+   {
+    return res.status(404).json({error: 'no medicine'})
+   }
+
+   res.send({sales,quantity});
+   
 };
+
+module.exports={showMedicine};
+module.exports={viewMedicineDetails};

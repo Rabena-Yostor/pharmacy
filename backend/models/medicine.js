@@ -18,7 +18,15 @@ const medicineSchema = new Schema({
   imageUrl:{
     type: String,
     required: true,
-  } }
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  }, 
+  sales: {
+    type: Number,
+    required: true,
+  },}
    );
  
 
