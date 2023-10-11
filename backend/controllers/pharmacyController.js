@@ -1,6 +1,13 @@
 const Medicine = require('../models/pharmacyModel')
 const mongoose = require('mongoose')
 
+
+const getMedicines = async (req, res) => {
+    const medicines = await Medicine.find({}).sort({createdAt: -1})
+  
+    res.status(200).json(medicines)
+  }
+
 const filterMedicine = async (req, res) => {
     try {
         const { medicinalUse } = req.body;
@@ -46,5 +53,6 @@ const createMedicine = async (req, res) => {
 
 module.exports = {
     createMedicine,
-    filterMedicine
+    filterMedicine,
+    getMedicines
 }
