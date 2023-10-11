@@ -1,6 +1,8 @@
 const express = require('express')
 const{
-    createPatient
+    createPatient,
+    getAllPatients
+    
     
 }=require('../controllers/RegesterPatientController')
 //const { create } = require('../models/addAdmin')
@@ -9,7 +11,8 @@ const{
     createPharmacist
 } = require('../controllers/requestPharmacistController')
 const{
-    createAdmin
+    createAdmin,
+    getAllAdmins
 } = require('../controllers/addAdminController')
 
 
@@ -23,6 +26,10 @@ router.post('/createPharmacist',createPharmacist)
 
 //post new admin 
 router.post('/admin', createAdmin)
+//get all patients
+router.get('/getAllPatients',getAllPatients)
+//get all admins
+router.get('/getAllAdmins',getAllAdmins)
 
     
   

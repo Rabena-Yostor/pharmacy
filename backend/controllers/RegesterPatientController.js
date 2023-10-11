@@ -11,8 +11,18 @@ const createPatient = async(req, res) => {
     catch(err){
         res.status(400).json({message: 'Admin could not be created'})
     }
+    
 }
-
+//get all patients
+const getAllPatients = async(req, res) => {
+    try{
+        const patients = await addPatient.find()
+        res.status(200).json({patients})
+    }catch(error){
+        res.status(400).json({message: 'cannot get all patients'})
+    }
+}
 module.exports = {  
-    createPatient
+    createPatient,
+    getAllPatients
 }
