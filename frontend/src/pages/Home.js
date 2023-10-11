@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react'
 
 
 //components  
-
+import MedicineList from '../components/MedicineList'
 
 
 
@@ -23,8 +23,8 @@ const Home = () => {
     return (
         <div className="home">
           <div className="medicines">
-            {medicines && medicines.map(medicine => (
-              <p key ={medicine._id}>{medicine.name}</p>
+            {medicines && medicines.map((medicine) => (
+              <MedicineList key ={medicine._id} medicine = {medicine} / >
             ))}
           </div>
         </div>
