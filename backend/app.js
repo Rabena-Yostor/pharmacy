@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 const app = express();
 const MongoURI = process.env.MONGO_URI ;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
@@ -22,12 +22,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 const medicineRoutes = require('./routes/pharmacy');
 
-app.set('view engine', 'ejs');
-
-app.use('/', medicineRoutes);
+app.use('/med', medicineRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-app.get("/medicine", showMedicine);
+

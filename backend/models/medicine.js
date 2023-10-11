@@ -20,14 +20,8 @@ const medicineSchema = new Schema({
     required: true,
   } }
    );
-   const pharmamed = new Schema({
-    name: String,
-    price: Number,
-    description: String,
-    availableQuantity: Number,
-    sales: Number,
-  });
+ 
 
 const Medicine = mongoose.model('Medicine', medicineSchema);
-const Medicine2 = mongoose.model('Medicine2', pharmamed);
+
 module.exports = Medicine;

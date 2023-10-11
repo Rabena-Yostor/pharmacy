@@ -2,11 +2,11 @@
 
 const express = require('express');
 const router = express.Router();
-const pharma = require('../controllers/pharma');
-const patient = require('../controllers/patient');
-const admin = require('../controllers/admin');
+const pharma = require('../controller/pharma');
+const patient = require('../controller/patient');
+const admin = require('../controller/adminstrator');
 
-router.get('/', medicineController.showMedicine);
-router.get('/medicine-details', medicineController.viewMedicineDetails);
+router.get('/show', admin.showMedicine);
+
 
 module.exports = router;
