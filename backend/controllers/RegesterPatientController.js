@@ -8,8 +8,8 @@ const createPatient = async(req, res) => {
         const patient = await addPatient.create({UserName,Name,Email,Password,DateOfBirth,Gender,MobileNumber,EmergencyContact })
         res.status(201).json({patient})
     }
-    catch(err){
-        res.status(400).json({message: 'Admin could not be created'})
+    catch(errorr){
+        res.status(400).json({error: 'Admin could not be created'})
     }
     
 }

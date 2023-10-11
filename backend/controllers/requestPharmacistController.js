@@ -10,7 +10,7 @@ const createPharmacist = async(req, res) => {
         //const workout = await Workout.create({title, reps, load})      
         res.status(201).json({pharm})
     }catch(error){
-        res.status(400).json({message: 'cannot create a request to be a pharmacist'})
+        res.status(400).json({error: 'cannot create a request to be a pharmacist'})
 
     }
 }
