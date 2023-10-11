@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(err)
   }) 
 
-const medicineRoutes = require('./routes/medicineRoutes');
+const medicineRoutes = require('./routes/pharmacy');
 
 app.set('view engine', 'ejs');
 
