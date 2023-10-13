@@ -39,7 +39,7 @@ EmergencyContact:{
         type:String,
         required:true
     },
-    MobileNumber:{
+    MobileNumberEmergency:{
         type:Number,
         required:true
     },

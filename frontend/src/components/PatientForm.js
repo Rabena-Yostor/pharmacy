@@ -8,13 +8,19 @@ const PatientForm = () => {
     const [DateOfBirth, setPatientDateOfBirth] = useState('')
     const [Gender, setPatientGender] = useState('')
     const [MobileNumber, setPatientMobileNumber] = useState('')
-    const [EmergencyContact, setPatientEmergencyContact] = useState('')
+    const [EmergencyContact, setPatientEmergencyContact] = useState([])
+    const[FullName,setFullName]=useState('')
+    const[MobileNumberEmergency,setMobileNumberEmergency]=useState('')
+    const[RelationToPatient,setRelationToPtient]=useState('')
     const [error, setError] = useState(null)
     
     const handleSubmit = async(e) => {
         e.preventDefault()
+
         
-        const patient= {UserName,Name,Email,Password,DateOfBirth,Gender,MobileNumber,EmergencyContact}
+        
+        let patient= {UserName,Name,Email,Password,DateOfBirth,Gender,MobileNumber,"EmergencyContact" :{FullName,MobileNumberEmergency,RelationToPatient}}
+        console.log(patient)
         const response = await fetch('/api/workouts/createPatient', {
             method: 'POST',
            
@@ -36,11 +42,16 @@ const PatientForm = () => {
             setPatientGender('')
             setPatientMobileNumber('')
             setPatientEmergencyContact('')
+            setFullName('')
+            setMobileNumberEmergency('')
+            setPatientEmergencyContact('')
             setError(null)
             console.log('Patient Created')
         }
 
     }
+
+    
 
     return (
         <form className="add-form" onSubmit={handleSubmit}>
@@ -81,10 +92,20 @@ const PatientForm = () => {
              onChange={(e) => setPatientMobileNumber(e.target.value)}
                 value={MobileNumber}
             />
-            <label> Emergency Contact</label>
+            <label> Emergency Name</label>
             <input type="text"
-             onChange={(e) => setPatientEmergencyContact(e.target.value)}
-                value={EmergencyContact}
+             onChange={(e) => setFullName(e.target.value)}
+                value={FullName}
+            />
+             <label> Emergency Number </label>
+            <input type="text"
+             onChange={(e) => setMobileNumberEmergency(e.target.value)}
+                value={MobileNumberEmergency}
+            />
+             <label> Emergency RelationToPatient </label>
+            <input type="text"
+             onChange={(e) => setRelationToPtient(e.target.value)}
+                value={RelationToPatient}
             />
             <button >Register</button>
             {error && <div className="error">{error}</div>}

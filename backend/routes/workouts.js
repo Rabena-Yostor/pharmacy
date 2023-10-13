@@ -8,7 +8,8 @@ const{
 //const { create } = require('../models/addAdmin')
 //const Request_register_as_doctor =require('../models/WorkoutModel')
 const{
-    createPharmacist
+    createPharmacist,
+    getAllPharmacist
 } = require('../controllers/requestPharmacistController')
 const{
     createAdmin,
@@ -30,7 +31,8 @@ router.post('/admin', createAdmin)
 router.get('/getAllPatients',getAllPatients)
 //get all admins
 router.get('/getAllAdmins',getAllAdmins)
-
+//get all pharmacist
+router.get('/getPharmacist',getAllPharmacist)
     
   
 module.exports = router

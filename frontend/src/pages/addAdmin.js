@@ -21,5 +21,11 @@ useEffect(() => {
     fetchAdmin()
 },[])
    //CREATE a homepage that choose to go to any page
+return (
+    <div className="home">
+        <AdminForm/>
+    </div>
+)
+
 }
 export default AddAdmin

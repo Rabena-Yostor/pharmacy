@@ -1,3 +1,4 @@
+const requestRegisterAsPharmacist = require('../models/requestRegisterAsPharmacist');
 const  Request = require('../models/requestRegisterAsPharmacist')
 const mongoose = require('mongoose');
 
@@ -14,7 +15,22 @@ const createPharmacist = async(req, res) => {
 
     }
 }
+//get all pharmacist
+const getAllPharmacist= async(req, res) => {
+    try{
+        const pharmacist = await requestRegisterAsPharmacist.find()
+        res.status(200).json({pharmacist})
+    }catch(error){
+        res.status(400).json({message: 'cannot get all admins'})
+    }
+}
+
+
+
+
+
 
 module.exports = {
+    getAllPharmacist,
     createPharmacist
 }
