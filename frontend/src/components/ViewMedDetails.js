@@ -44,4 +44,4 @@ function MedicineDetails() {
 }
 
 export default MedicineDetails;
-// hh
+// hh ufshuhfuoif
