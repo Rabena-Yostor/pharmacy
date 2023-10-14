@@ -7,19 +7,28 @@ export const medicinesReducer = (state, action) => {
     case 'SET_MEDICINES':
       return { 
         medicines: action.payload 
-      }
+      };
     case 'CREATE_MEDICINE':
       return { 
         medicines: [action.payload, ...state.medicines] 
+      };
+    case 'DELETE_MEDICINE':
+      return { 
+        medicines: state.medicines.filter(medicine => medicine._id !== action.payload._id) 
+      };
+    case 'UPDATE_MEDICINE':
+      const updatedIndex = state.medicines.findIndex(medicine => medicine._id === action.payload._id);
+      if (updatedIndex !== -1) {
+        const updatedMedicines = [...state.medicines];
+        updatedMedicines[updatedIndex] = action.payload;
+        return { medicines: updatedMedicines };
       }
-      case 'DELETE_MEDICINE':
-        return { 
-          medicines: state.medicines.filter(w => w._id !== action.payload._id) 
-        }
+      return state;
+
     default:
-      return state
+      return state;
   }
-}
+};
 
 export const MedicinesContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(medicinesReducer, { 

@@ -1,6 +1,10 @@
 import { useMedicinesContext } from "../hooks/useMedicinesContext"
-const MedicineDetails = ({ medicine }) => {
+
+
+const MedicineDetails = ({ medicine,onEdit }) => {
+  
   const {dispatch} = useMedicinesContext()
+  
   const handleClick = async () => {
     const response = await fetch('/medicine/' + medicine._id, {
       method: 'DELETE'
@@ -20,6 +24,8 @@ const MedicineDetails = ({ medicine }) => {
       <p><strong>Avialable Quantity:  </strong>{medicine.available_quantity}</p>
       <p>{medicine.createdAt}</p>
       <span onClick={handleClick}>delete</span>
+      <span></span>
+      <span onClick={() => onEdit(medicine)}>edit</span>
     </div>
   )
 }
