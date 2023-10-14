@@ -17,8 +17,24 @@ const Home = () => {
     setEditMedicine(null);
   };
 
-  const handleSaveEdit = (updatedMedicine) => {
-    dispatch({ type: 'UPDATE_MEDICINE', payload: updatedMedicine });
+  const handleSaveEdit = async (updatedMedicine) => {
+    // Make a PUT request to update the medicine on the server
+    await fetch(`/medicine/${updatedMedicine._id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedMedicine),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    // Fetch the updated list of medicines
+    const response = await fetch('/medicine');
+    const json = await response.json();
+  
+    // Update the state with the fetched data
+    dispatch({ type: 'SET_MEDICINES', payload: json });
+  
+    // Close the edit form
     setEditMedicine(null);
   };
   useEffect(() => {
