@@ -10,11 +10,12 @@ const getMedicines = async (req, res) => {
 
 const filterMedicine = async (req, res) => {
     try {
-        const { medicinalUse } = req.body;
+        const { medicinalUse } = req.query;
 
         if (!medicinalUse) {
             return res.status(400).json({ error: 'Medicinal use parameter is required' });
         }
+        
 
         const medicines = await Medicine.find({ medicinalUse });
 
