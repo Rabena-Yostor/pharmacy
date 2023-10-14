@@ -31,7 +31,7 @@ function MedicineInfo() {
                  <p>Name: {medicine.Name}</p>
               <p>Price: {medicine.price}</p>
               <p>Description: {medicine.description}</p>
-              <img src={medicine.imageUrl} alt={medicine.Name} />
+              <img src={medicine.imageUrl} alt={medicine.Name} style={{ maxWidth: "100px" }} />
             </li>
           ))}
         </ul>
