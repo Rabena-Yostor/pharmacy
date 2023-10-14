@@ -1,5 +1,5 @@
 // controllers/medicineController.js
-const Medicine = require('../models/medicine');
+const Medicine = require('../models/medicine.js');
 
 const showMedicine = async (req, res) => {
 

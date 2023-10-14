@@ -22,5 +22,3 @@ const medicineRoutes = require('./routes/pharmacy');
 app.use('/med', medicineRoutes);
 
 app.get()
-
-

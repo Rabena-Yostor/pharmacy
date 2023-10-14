@@ -32,4 +32,4 @@ const medicineSchema = new Schema({
 
 const Medicine = mongoose.model('Medicine', medicineSchema);
 
-module.exports = Medicine;
+module.exports = Medicine;
