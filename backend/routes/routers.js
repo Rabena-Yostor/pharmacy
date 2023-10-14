@@ -11,6 +11,6 @@ router.post('/create',createMedicine)
 
 //getMedicines
 
-router.get('/', getMedicines)
+router.get('/get', getMedicines)
 
 module.exports = router
