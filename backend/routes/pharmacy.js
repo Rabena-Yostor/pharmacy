@@ -28,6 +28,7 @@ router.post('/add', async (req, res) => {
     }
   });
 
+router.get('/show', admin.showMedicine);
 router.get('/show/admin', admin.showMedicine);
 router.get('/show/patient', patient.showMedicine);
 router.get('/show/pharma', pharma.showMedicine);

@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const MongoURI = process.env.MONGO_URI ;
 const PORT = process.env.PORT || 8000;
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // connect to db
