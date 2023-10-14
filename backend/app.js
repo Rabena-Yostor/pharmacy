@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
+const bodyParser = require('body-parser');
 const app = express();
 const MongoURI = process.env.MONGO_URI ;
 const PORT = process.env.PORT || 8000;
+
+app.use(bodyParser.json());
 
 // connect to db
 mongoose.connect("mongodb+srv://hanakandil1610:kny0NMgtqHuDKUc7@cluster0.7kow66n.mongodb.net/")
@@ -21,4 +24,3 @@ const medicineRoutes = require('./routes/pharmacy');
 
 app.use('/med', medicineRoutes);
 
-app.get()
