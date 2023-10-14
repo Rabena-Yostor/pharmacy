@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { viewMedicineDetails } from '../../../backend/controller/pharma';
+import { viewMedicineDetails } from 'controller/pharma';
 const [medicineData, setMedicineData] = useState([]);
 const fetchMedicineData = async () => {
     try {
