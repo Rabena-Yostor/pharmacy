@@ -26,7 +26,7 @@ const SearchBar = ({ onSearch }) => {
       <button onClick={handleSearch}>Search</button>
       <div>
   {searchResults.map((result) => (
-    <div key={result._id}>Name: {result.name}, Medicinal Use: {result.medicinalUse}</div>
+    <div key={result._id}>Name: {result.name}, Details: {result.details}</div>
   ))}
 </div>
 

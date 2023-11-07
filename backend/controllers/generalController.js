@@ -16,11 +16,11 @@ const { default: mongoose } = require('mongoose');
 // }
 
 const searchMedicine = async (req, res) => {
-    const  Name  = req.query
+    const  name  = req.query
     try {
-        const medicine = await Medicine.findOne({ name: Name });
+        const medicine = await Medicine.findOne({ name: name });
         if (medicine == null){
-            console.log("medicine is null")
+            console.log("medicine is not found")
             res.status(404).json({ message: "Medicine not found" });
         }
         else{

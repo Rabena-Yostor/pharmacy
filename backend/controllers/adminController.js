@@ -23,9 +23,9 @@ const viewPharmacistsRequests = async (req, res) => {
 }
 
 const viewPharmacistRequest = async (req, res) => {
-    const { PharmacistID } = req.body;
+    const { UserName } = req.body;
     try {
-        const pharmacistRequest = await PharmacistRequest.findOne({ PharmacistID: PharmacistID });
+        const pharmacistRequest = await PharmacistRequest.findOne({ UserName: UserName });
         res.status(200).json(pharmacistRequest);
     } catch (error) {
         res.status(404).json({ message: error.message });
