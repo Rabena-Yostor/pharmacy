@@ -16,7 +16,7 @@ const { default: mongoose } = require('mongoose');
 // }
 
 const searchMedicine = async (req, res) => {
-    const  name  = req.query
+    const  name  = req.query.query.toLowerCase();
     try {
         const medicine = await Medicine.findOne({ name: name });
         if (medicine == null){
@@ -25,9 +25,11 @@ const searchMedicine = async (req, res) => {
         }
         else{
             res.status(200).json([medicine]);
+            console.log("medicine is found")
         }
     } catch (error) {
         res.status(404).json({ message: error.message });
+        console.log("medicine is not found")
     }
     // app.listen(4000, () => {
     //     console.log(`Server is running on port ${port}`);
