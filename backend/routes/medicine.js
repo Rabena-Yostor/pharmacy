@@ -11,7 +11,8 @@ const{
 
 const{
     createPatient,
-    getAllPatients
+    getAllPatients,
+    addAddress,
     
     
 }=require('../controllers/RegesterPatientController')
@@ -36,6 +37,15 @@ const{
 const {
     searchMedicine
 } = require('../controllers/generalController')
+
+const {
+    addMedicineToCart,
+    getCartItems,
+    deleteMedicineFromCart,
+    changeQuantityInCart,
+    getAddresses,
+
+} = require ('../controllers/cartController')
 
 const pharma = require('../controllers/pharma');
 const patient = require('../controllers/patient');
@@ -80,4 +90,17 @@ router.get("/viewPharmacistRequest", viewPharmacistRequest);
 router.get("/viewPharmacistsRequests", viewPharmacistsRequests);
 router.get("/searchMedicine", searchMedicine);
 router.get('/patientinfo',viewPatientInfo)
+
+
+
+
+router.post("/")
+
+
+router.post('/addMedicineToCart/:UserName/:name', addMedicineToCart);
+router.get('/getCartItems/:UserName', getCartItems);
+router.delete ('/deleteMedicineFromCart/:UserName/:name', deleteMedicineFromCart);
+router.put('/changeQuantityInCart/:UserName/:name/:newQuantity', changeQuantityInCart);
+router.post('/addAddress/:UserName', addAddress);
+router.get('/getAddresses/:UserName', getAddresses);
 module.exports = router

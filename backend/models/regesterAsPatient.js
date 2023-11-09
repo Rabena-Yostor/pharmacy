@@ -48,8 +48,33 @@ EmergencyContact:{
         required:true
     }
 },
-
-}, {timestamps: true})
+cart: {
+    items: [
+        {
+            medicine: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            },
+        }
+    ],
+    totalAmount: {
+        type: Number,
+        default: 0,
+    },
+},
+addresses: [
+    {
+      street: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      zipCode: { type: String, required: true },
+    }
+  ],
+}, { timestamps: true });
 
 
 
