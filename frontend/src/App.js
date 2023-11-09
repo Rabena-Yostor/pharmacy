@@ -16,7 +16,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <SearchBar />
         <Navbar />
         <div className="pages">
           <Routes>
