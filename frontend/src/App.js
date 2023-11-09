@@ -11,7 +11,6 @@ import AddAdmin from './pages/addAdmin';
 import RegiesteAsPatient from './pages/regiesteAsPatient';
 import ViewPatientInfo from './pages/ViewPatientInfo';
 import KhaledHome from './pages/KhaledHome';
-import SearchBar from './components/Searchbar';
 
 function App() {
   return (
