@@ -40,6 +40,7 @@ const KhaledHome = () => {
     };
     return (
         <div className="home">
+         <SearchBar />
             <div className="requests">
                 {requests && requests.map((request) => (
                     <div key={request._id}>
