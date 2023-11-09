@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SearchBar from './components/Searchbar';
 
 const KhaledHome = () => {
     const [requests, setRequests] = useState(null);
