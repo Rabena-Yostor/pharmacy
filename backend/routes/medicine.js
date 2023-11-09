@@ -18,7 +18,8 @@ const{
 
 const{
     createPharmacist,
-    getAllPharmacist
+    getAllPharmacist,
+    uploadMiddleware
 } = require('../controllers/requestPharmacistController')
 
 const{
@@ -30,7 +31,8 @@ const{
     viewPharmacistRequest,
     viewPharmacistsRequests,
     viewPatientInfo,
-    
+    rejectPharmacistRequest,
+    acceptPharmacistRequest
 } = require('../controllers/adminController')
 
 const {
@@ -65,7 +67,7 @@ router.get('/view',pharma.viewMedicineDetails )
 router.post('/createPatient',createPatient)
 
 //post new pharmacist
-router.post('/createPharmacist',createPharmacist)
+router.post('/createPharmacist',uploadMiddleware, createPharmacist)
 
 //post new admin 
 router.post('/admin', createAdmin)
@@ -75,6 +77,10 @@ router.get('/getAllPatients',getAllPatients)
 router.get('/getAllAdmins',getAllAdmins)
 //get all pharmacist
 router.get('/getPharmacist',getAllPharmacist)
+//reject a pharmacist request
+router.delete('/rejectPharmacistRequest/:UserName',rejectPharmacistRequest)
+//accept a pharmacist request
+router.post('/acceptPharmacistRequest/:UserName',acceptPharmacistRequest)
 
 router.get("/viewPharmacistRequest", viewPharmacistRequest);
 router.get("/viewPharmacistsRequests", viewPharmacistsRequests);

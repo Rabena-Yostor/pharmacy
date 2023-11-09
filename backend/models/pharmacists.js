@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Request_register_as_pharmacist = new mongoose.Schema({
+const pharmacists = new mongoose.Schema({
 UserName: {
     type: String,
     required: true
@@ -48,8 +48,9 @@ licenseFile: {
 },
 
 
+
 }, {timestamps: true})
 
 
 
-module.exports = mongoose.model('Request_register_as_pharmacist',Request_register_as_pharmacist)
+module.exports = mongoose.model('pharmacists',pharmacists)
