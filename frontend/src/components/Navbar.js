@@ -8,6 +8,9 @@ const Navbar = () => {
         <Link to="/">
           <h1>Rabena Yostor Pharmacy</h1>
         </Link>
+        <Link to="/">
+            <button className="btn btn-primary">Log Out</button>
+          </Link>
       </div>
     </header>
   )

@@ -32,7 +32,8 @@ const{
     viewPharmacistsRequests,
     viewPatientInfo,
     rejectPharmacistRequest,
-    acceptPharmacistRequest
+    acceptPharmacistRequest,
+    login
 } = require('../controllers/adminController')
 
 const {
@@ -82,8 +83,12 @@ router.delete('/rejectPharmacistRequest/:UserName',rejectPharmacistRequest)
 //accept a pharmacist request
 router.post('/acceptPharmacistRequest/:UserName',acceptPharmacistRequest)
 
+//login
+router.post('/login', pharma.login);
+
 router.get("/viewPharmacistRequest", viewPharmacistRequest);
 router.get("/viewPharmacistsRequests", viewPharmacistsRequests);
 router.get("/searchMedicine", searchMedicine);
 router.get('/patientinfo',viewPatientInfo)
+
 module.exports = router

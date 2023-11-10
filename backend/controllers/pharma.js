@@ -1,5 +1,8 @@
 // controllers/medicineController.js
 const Medicine = require('../models/medicineModel.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Pharmacist = require('../models/pharmacists.js');
 
 const showMedicine = async (req, res) => {
 
@@ -46,6 +49,36 @@ const viewMedicineDetails = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+const generateToken = (pharmacistId) => {
+  return jwt.sign({ pharmacistId }, 'your-secret-key', { expiresIn: '1h' });
+};
+
+const login = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find the pharmacist by username
+    const pharmacist = await Pharmacist.findOne({ UserName: username });
+
+    if (!pharmacist) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+
+    // Validate the password using bcrypt
+    const isPasswordValid = await bcrypt.compare(password, pharmacist.Password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+
+    // Generate and send a token upon successful login
+    const token = generateToken(pharmacist._id);
+    res.json({ token });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 
-module.exports={showMedicine,viewMedicineDetails};
+module.exports={showMedicine,viewMedicineDetails,login};
