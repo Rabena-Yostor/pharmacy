@@ -40,7 +40,7 @@ const {
     searchMedicine
 } = require('../controllers/generalController')
 
-const { changePassword } = require('../controllers/patient');
+const { changePassword , sendOtp,resetPassword } = require('../controllers/patient');
 
 const pharma = require('../controllers/pharma');
 const patient = require('../controllers/patient');
@@ -65,6 +65,8 @@ router.get('/show/patient', patient.showMedicine);
 router.get('/show/pharma', pharma.showMedicine);
 
 router.post('/change-password', changePassword);
+router.post('/send-otp', sendOtp);
+router.post('/reset-password', resetPassword);
 
 router.get('/view',pharma.viewMedicineDetails )
 
