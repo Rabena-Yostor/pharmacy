@@ -8,7 +8,6 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [redirectToLanding, setRedirectToLanding] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,18 +19,25 @@ const Login = () => {
       // Assuming your backend sends a token upon successful login
       console.log('Login successful! Token:', token);
 
+     
     } catch (error) {
       // Handle login error
       console.error('Login failed:', error.message);
       setError('Invalid username or password');
     }
-    navigate('/landing');
+     // Navigate to Landing.js after successful login
+      navigate('/landing');
   };
 
-  // Redirect to Landing.js if the state is set to true
-  
-    
+  // Function to handle navigation to the ChangePassword page
+  const handleChangePassword = () => {
+    navigate('/change-password');
+  };
 
+  // Function to handle navigation to the ResetPassword page
+  const handleResetPassword = () => {
+    navigate('/reset-password');
+  };
 
   return (
     <div>
@@ -59,6 +65,12 @@ const Login = () => {
       </form>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {/* Change Password Button */}
+      <button onClick={handleChangePassword}>Change Password</button>
+
+      {/* Reset Password Button */}
+      <button onClick={handleResetPassword}>Reset Password</button>
     </div>
   );
 };
