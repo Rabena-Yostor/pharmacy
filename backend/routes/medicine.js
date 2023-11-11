@@ -44,7 +44,9 @@ const {
     deleteMedicineFromCart,
     changeQuantityInCart,
     getAddresses,
-
+    zeroAmount,
+    checkOut,
+    chooseAddress,
 } = require ('../controllers/cartController')
 
 const pharma = require('../controllers/pharma');
@@ -92,15 +94,15 @@ router.get("/searchMedicine", searchMedicine);
 router.get('/patientinfo',viewPatientInfo)
 
 
-
-
-router.post("/")
-
-
+//Hamouda Cart!
 router.post('/addMedicineToCart/:UserName/:name', addMedicineToCart);
 router.get('/getCartItems/:UserName', getCartItems);
 router.delete ('/deleteMedicineFromCart/:UserName/:name', deleteMedicineFromCart);
 router.put('/changeQuantityInCart/:UserName/:name/:newQuantity', changeQuantityInCart);
 router.post('/addAddress/:UserName', addAddress);
 router.get('/getAddresses/:UserName', getAddresses);
+router.put('/zeroAmount/:UserName', zeroAmount);
+router.put('/checkOut/:UserName', checkOut);
+router.put('/chooseAddress/:UserName', chooseAddress);
+//Hamouda Cart!
 module.exports = router

@@ -65,7 +65,46 @@ cart: {
         type: Number,
         default: 0,
     },
+    address: {
+        street: { type: String, default: ''},
+        city: { type: String, default: ''},
+        state: { type: String, default: ''},
+        zipCode: { type: String, default: ''},
+    },
+    
 },
+orders: [
+    {
+      items: [
+        {
+          medicine: {
+            type: String,
+            required: true,
+          },
+          quantity: {
+            type: Number,
+            required: true,
+          },
+        },
+      ],
+      totalAmount: {
+        type: Number,
+        default: 0,
+      },
+      address: {
+        street: { type: String, required: true },
+        city: { type: String, required: true },
+        state: { type: String, required: true },
+        zipCode: { type: String, required: true },
+      },
+      status: {
+        type: String,
+        enum: ['Pending', 'Completed', 'Cancelled'],
+        default: 'Pending',
+      },
+      
+    },
+  ],
 addresses: [
     {
       street: { type: String, required: true },

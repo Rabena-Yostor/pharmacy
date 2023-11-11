@@ -12,12 +12,13 @@ import RegiesteAsPatient from './pages/regiesteAsPatient';
 import ViewPatientInfo from './pages/ViewPatientInfo';
 import KhaledHome from './pages/KhaledHome';
 import SearchBar from './components/Searchbar';
-
+import ShopCart from './pages/ShopCart.js';
+import CheckoutPage from './pages/CheckoutPage.js';
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <SearchBar />
+      {/* <SearchBar /> */}
         <Navbar />
         <div className="pages">
           <Routes>
@@ -30,8 +31,13 @@ function App() {
             <Route path="/hazem2" element={<AddAdmin />} />
             <Route path="/hazem3" element={<RegiesteAsPatient />} />
             <Route path="/malak" element={<ViewPatientInfo />} />
-            <Route path="/khaled" element={<KhaledHome />} />
+            <Route path="/khaled" element={<div><KhaledHome /><SearchBar /></div>} />
 
+
+            <Route path="/shop" element={<ShopCart />} />
+            <Route path = "/checkout" element={<CheckoutPage />} />
+
+      
           </Routes>
         </div>
       </BrowserRouter>

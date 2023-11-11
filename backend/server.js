@@ -5,6 +5,8 @@ const medicineroute = require('./routes/medicine')
 const app = express();
 const cors = require('cors')
 
+
+
 app.use((req,res,next)=>{
     console.log(req.path,req.method)
     next()

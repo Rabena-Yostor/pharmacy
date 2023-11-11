@@ -9,7 +9,7 @@ function Filter() {
   // Fetch all medicines
   const fetchMedicines = async () => {
     try {
-      const response = await fetch('/api/medicine/getAllMedicines');
+      const response = await fetch('http://localhost:4000/api/medicine/getAllMedicines');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

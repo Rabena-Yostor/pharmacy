@@ -8,6 +8,9 @@ function HomePage() {
       <Link to="/peter">
         <button>Add and Edit Medicines</button>
       </Link>
+      <Link to="/shop">
+        <button>Shop</button>
+      </Link>
       <Link to="/hamouda">
         <button>Filter Medicines</button>
       </Link>

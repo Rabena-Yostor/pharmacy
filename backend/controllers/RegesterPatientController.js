@@ -70,6 +70,18 @@ const addAddress = async (req, res) => {
       if (!patient) {
         return res.status(404).json({ message: 'Patient not found' });
       }
+
+         // Check if the address already exists
+    const existingAddress = patient.addresses.find(
+        (address) =>
+          address.street === street &&
+          address.city === city &&
+          address.state === state &&
+          address.zipCode === zipCode
+      );
+      if (existingAddress) {
+        return res.status(400).json({ message: 'Address already exists' });
+      }
   
       // Add the new address to the addresses array
       const newAddress = { street, city, state, zipCode };

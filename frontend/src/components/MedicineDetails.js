@@ -26,9 +26,9 @@ const MedicineDetails = ({ medicine,onEdit }) => {
       <p><strong>Details:  </strong>{medicine.details}</p>
       <p><strong>Price:  </strong>{medicine.price}</p>
       <p><strong>Available Quantity:  </strong>{medicine.quantity}</p>
-      <p><strong>Prescription Required?:  </strong>{medicine.prescriptionRequired}</p>
+      {/* <p><strong>Prescription Required?:  </strong>{medicine.prescriptionRequired}</p> */}
       <p>{medicine.createdAt}</p>
-      <span onClick={handleClick}>delete</span>
+      {/* <span onClick={handleClick}>delete</span> */}
       <span></span>
       <span onClick={() => onEdit(medicine)}>edit</span>
     </div>
