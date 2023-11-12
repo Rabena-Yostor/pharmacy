@@ -96,8 +96,25 @@ const addAddress = async (req, res) => {
     }
   };
 
+  const getWallet = async (req, res) => {
+    try {
+      const { UserName } = req.params;
+  
+      const patient = await addPatient.findOne({ UserName });
+  
+      if (!patient) {
+        return res.status(404).json({ message: 'Patient not found' });
+      }
+  
+      return res.status(200).json({ wallet: patient.wallet });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error getting wallet' });
+    }
+  };
+
 module.exports = {  
     createPatient,
     getAllPatients,
     addAddress,
+    getWallet,
 }

@@ -260,27 +260,30 @@ const changeQuantityInCart = async (req, res) => {
     }
   }
 
-
-  const checkOut = async (req, res) => {
+  const payWithWallet = async (req, res) => {
     try{
       const { UserName } = req.params;
-      const { street, city, state, zipCode } = req.body;
-    
       const patient = await Patient.findOne({ UserName });
       if (!patient) {
         return res.status(404).json({ message: 'Patient not found' });
       }
-      const cartItems = patient.cart.items;
+      const wallet = patient.wallet;
       const totalAmount = patient.cart.totalAmount;
+      // const totalAmount2 = 99999999;
+      console.log('Wallet:', wallet);
+      console.log('Total Amount:', totalAmount);
+      if(wallet < totalAmount){
+        return res.status(400).json({ message: 'Not enough money in wallet' });
+      }
+      patient.wallet -= totalAmount;
+      console.log('Wallet:', patient.wallet); 
+      const cartItems = patient.cart.items;
+  
+      const address = patient.cart.address;
       const order = {
         items: cartItems,
         totalAmount: totalAmount,
-        address: {
-          street: street,
-          city: city,
-          state: state,
-          zipCode: zipCode,
-        },
+        address: address,
         status: 'Pending',
       };
       
@@ -288,6 +291,44 @@ const changeQuantityInCart = async (req, res) => {
       console.log('Order:', patient.orders);
       patient.cart.items = [];
       patient.cart.totalAmount = 0;
+      patient.cart.address.street = '';
+      patient.cart.address.city = '';
+      patient.cart.address.state = '';
+      patient.cart.address.zipCode = '';
+      await patient.save();
+      return res.status(200).json({ message: 'Paid with wallet successfully' });
+    }
+    catch(error){
+      return res.status(500).json({ message: 'Error paying with wallet' });
+    }
+  }
+  const checkOut = async (req, res) => {
+    try{
+      const { UserName } = req.params;
+      
+    
+      const patient = await Patient.findOne({ UserName });
+      if (!patient) {
+        return res.status(404).json({ message: 'Patient not found' });
+      }
+      const cartItems = patient.cart.items;
+      const totalAmount = patient.cart.totalAmount;
+      const address = patient.cart.address;
+      const order = {
+        items: cartItems,
+        totalAmount: totalAmount,
+        address: address,
+        status: 'Pending',
+      };
+      
+      patient.orders.push(order);
+      console.log('Order:', patient.orders);
+      patient.cart.items = [];
+      patient.cart.totalAmount = 0;
+      patient.cart.address.street = '';
+      patient.cart.address.city = '';
+      patient.cart.address.state = '';
+      patient.cart.address.zipCode = '';
       await patient.save();
       return res.status(200).json({ message: 'Checked out successfully' });
 
@@ -298,4 +339,4 @@ const changeQuantityInCart = async (req, res) => {
   }
 
 
-module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress, };
+module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet };

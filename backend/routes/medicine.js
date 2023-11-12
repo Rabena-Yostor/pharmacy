@@ -13,7 +13,7 @@ const{
     createPatient,
     getAllPatients,
     addAddress,
-    
+    getWallet,
     
 }=require('../controllers/RegesterPatientController')
 
@@ -47,6 +47,8 @@ const {
     zeroAmount,
     checkOut,
     chooseAddress,
+    payWithWallet,
+    
 } = require ('../controllers/cartController')
 
 const pharma = require('../controllers/pharma');
@@ -104,5 +106,7 @@ router.get('/getAddresses/:UserName', getAddresses);
 router.put('/zeroAmount/:UserName', zeroAmount);
 router.put('/checkOut/:UserName', checkOut);
 router.put('/chooseAddress/:UserName', chooseAddress);
+router.get('/getWallet/:UserName', getWallet);
+router.put('/payWithWallet/:UserName', payWithWallet);
 //Hamouda Cart!
 module.exports = router

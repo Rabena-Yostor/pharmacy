@@ -113,6 +113,11 @@ addresses: [
       zipCode: { type: String, required: true },
     }
   ],
+
+wallet: {
+    type: Number,
+    default: 1000,
+},
 }, { timestamps: true });
 
 

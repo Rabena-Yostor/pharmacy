@@ -104,7 +104,7 @@ function CartIcon() {
   
 
   return (
-    <div style={{ position: 'fixed', top: '10px', right: '10px', cursor: 'pointer' }}>
+    <div style={{ position: 'fixed', top: '10px', right: '50px', cursor: 'pointer' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -132,18 +132,22 @@ function CartIcon() {
         {cartItems ? (
           <ul>
             {cartItems.map((item) => (
-              <li key={item.medicine._id}>
-                {item.medicine} - Quantity: {item.quantity}
-                <span style={{ marginRight: '8px' }}></span>
-                <button onClick={() => handleRemoveItem(item.medicine)}>Remove</button>
-                <input
-                  type="text"
-                  value={editedQuantity}
-                  onChange={(e) => setEditedQuantity(e.target.value)}
-                  onKeyPress={(e) => handleEditQuantityKeyPress(item.medicine, e)}
-                  placeholder="Change quantity here"
-                />
-              </li>
+            <li key={item.medicine._id}>
+            {item.medicine} - Quantity: {item.quantity}
+            <span style={{ marginRight: '8px' }}></span>
+            <button onClick={() => handleRemoveItem(item.medicine)}>Remove</button>
+            <input
+                type="text"
+                value={editedQuantity}
+                onChange={(e) => setEditedQuantity(e.target.value)}
+                placeholder="Change quantity here"
+                style={{ display: 'inline-block', marginRight: '8px' }}
+            />
+            <button type="button" onClick={() => handleEditQuantity(item.medicine)}>
+                Change Quantity
+            </button>
+        </li>
+        
             ))}
           </ul>
         ) : (

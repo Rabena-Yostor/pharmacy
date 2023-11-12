@@ -5,12 +5,31 @@ function Store() {
   const [medicines, setMedicines] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [walletBalance, setWalletBalance] = useState(0);
 
   useEffect(() => {
     // Fetch medicine details when the component mounts
     fetchMedicines();
+    fetchWalletBalance();
   }, []);
+  const fetchWalletBalance = async () => {
+    try {
+      // Replace 'username' with the actual username or get it dynamically
+      const username = 'yasser.aly';
+      const response = await fetch(`http://localhost:4000/api/medicine/getWallet/${username}`);
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
+      const data = await response.json();
+      console.log('Entire Response:', data);  // Log the entire response
+      setWalletBalance(data.wallet);
+
+    } catch (error) {
+      console.error('Error fetching wallet balance:', error);
+    }
+  };
   const fetchMedicines = async () => {
     try {
       const response = await fetch('http://localhost:4000/api/medicine/getAllMedicines');
@@ -59,6 +78,8 @@ function Store() {
   return (
     <div>
       <h1>Medicine Store</h1>
+      <p style={{ position: 'absolute', top: 22, right: 200 }}>Wallet Balance: {walletBalance} EGP</p>
+
       <CartIcon />
       <ul>
         {medicines.map((medicine) => (
