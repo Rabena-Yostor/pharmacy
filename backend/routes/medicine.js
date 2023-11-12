@@ -48,6 +48,8 @@ const {
     checkOut,
     chooseAddress,
     payWithWallet,
+    viewOrders,
+    removeOrder,
     
 } = require ('../controllers/cartController')
 
@@ -108,5 +110,7 @@ router.put('/checkOut/:UserName', checkOut);
 router.put('/chooseAddress/:UserName', chooseAddress);
 router.get('/getWallet/:UserName', getWallet);
 router.put('/payWithWallet/:UserName', payWithWallet);
+router.get('/viewOrders/:UserName', viewOrders);
+router.delete('/removeOrder/:UserName/:orderId', removeOrder);
 //Hamouda Cart!
 module.exports = router

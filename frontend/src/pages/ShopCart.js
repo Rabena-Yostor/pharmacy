@@ -66,7 +66,7 @@ function Store() {
       
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 500);
       }
     } catch (error) {
       console.error('Error adding medicine to cart:', error);
@@ -74,11 +74,14 @@ function Store() {
       setSuccessMessage(''); // Clear any existing success message
     }
   };
-
+  const handleViewOrders = async () => {
+    window.location.href = '/viewOrders';
+  }
   return (
     <div>
       <h1>Medicine Store</h1>
       <p style={{ position: 'absolute', top: 22, right: 200 }}>Wallet Balance: {walletBalance} EGP</p>
+      <button style = {{position: 'absolute', top: 45, right: 600}} onClick={handleViewOrders}>View Orders</button> 
 
       <CartIcon />
       <ul>

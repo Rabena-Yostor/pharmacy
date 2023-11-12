@@ -204,7 +204,8 @@ function CheckoutPage() {
 
             // Reload the page after 1 second
             setTimeout(() => {
-                window.location.reload();
+                // redirect to shop page
+                window.location.href = '/shop'; 
             }, 1000);
         } catch (error) {
             console.error('Error paying with wallet:', error);

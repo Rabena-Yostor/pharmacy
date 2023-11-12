@@ -338,5 +338,54 @@ const changeQuantityInCart = async (req, res) => {
     }
   }
 
+  const viewOrders = async (req, res) => {
+    try{
+      const{UserName} = req.params;
+      const patient = await Patient.findOne({ UserName });
+      if (!patient) {
+        return res.status(404).json({ message: 'Patient not found' });
+      }
+      const orders = patient.orders;
+      return res.status(200).json({ orders });
 
-module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet };
+    }
+    catch(error){
+      return res.status(500).json({ message: 'Error viewing orders' });
+    }
+  }
+
+  const removeOrder = async (req, res) => {
+    try {
+        const { UserName, orderId } = req.params;
+        console.log('Params:', UserName, orderId);
+        const patient = await Patient.findOne({ UserName });
+        console.log('Patient:', patient);
+        if (!patient) {
+            return res.status(404).json({ message: 'Patient not found' });
+        }
+
+        // Use findIndex to get the index of the order with the specified orderId
+        const orderIndex = patient.orders.findIndex(order => order._id.toString() === orderId);
+        console.log('Order Index:', orderIndex);
+
+        // Check if the order was found
+        if (orderIndex === -1) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Remove the order from the orders array using splice
+        const removedOrder = patient.orders.splice(orderIndex, 1);
+
+        // Save the updated patient document
+        await patient.save();
+
+        // Return the removed order or a success message
+        return res.status(200).json({ message: 'Order removed successfully', removedOrder });
+    } catch (error) {
+        console.error('Error removing order:', error);
+        return res.status(500).json({ message: 'Error removing order' });
+    }
+};
+
+
+module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder };

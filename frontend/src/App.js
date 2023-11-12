@@ -14,6 +14,7 @@ import KhaledHome from './pages/KhaledHome';
 import SearchBar from './components/Searchbar';
 import ShopCart from './pages/ShopCart.js';
 import CheckoutPage from './pages/CheckoutPage.js';
+import ViewOrders from './pages/ViewOrders.js';
 function App() {
   return (
     <div className="App">
@@ -36,6 +37,7 @@ function App() {
 
             <Route path="/shop" element={<ShopCart />} />
             <Route path = "/checkout" element={<CheckoutPage />} />
+            <Route path = "/viewOrders" element = {<ViewOrders />} />
 
       
           </Routes>
