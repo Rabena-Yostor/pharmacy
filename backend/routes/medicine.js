@@ -50,6 +50,7 @@ const {
     payWithWallet,
     viewOrders,
     removeOrder,
+    payment,
     
 } = require ('../controllers/cartController')
 
@@ -112,5 +113,6 @@ router.get('/getWallet/:UserName', getWallet);
 router.put('/payWithWallet/:UserName', payWithWallet);
 router.get('/viewOrders/:UserName', viewOrders);
 router.delete('/removeOrder/:UserName/:orderId', removeOrder);
+router.post('/payment', payment);
 //Hamouda Cart!
 module.exports = router

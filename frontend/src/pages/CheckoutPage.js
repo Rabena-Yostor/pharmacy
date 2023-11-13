@@ -250,7 +250,16 @@ function CheckoutPage() {
                 
         }
     };
-
+    const handlePayWithCard = async () => {
+        try{
+            window.location.href = '/payment';
+        }
+        catch(error){
+            console.error('Error paying with card:', error);
+            setErrorMessage('Something went wrong. Please try again.'); // Display a generic error message
+            setSuccessMessage(''); // Clear any existing success message
+        }
+    }
 
     return (
         <div>
@@ -340,7 +349,7 @@ function CheckoutPage() {
             <button type="button" onClick={handlePayCashOnDelivery} style={{ marginLeft: '50px' }}>
                 Pay Cash On Delivery
             </button>
-            <button type="button" onClick={handlePayCashOnDelivery} style={{ marginLeft: '50px' }}>
+            <button type="button" onClick={handlePayWithCard} style={{ marginLeft: '50px' }}>
                 Pay using Card (Stripe)
             </button>
 

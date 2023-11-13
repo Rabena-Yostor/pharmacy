@@ -1,6 +1,7 @@
 
 const Medicine = require('../models/medicineModel.js');
 const Patient = require('../models/regesterAsPatient.js');
+const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
 // add an over the counter medicine to cart
 
 const addMedicineToCart = async (req, res) => {
@@ -386,6 +387,20 @@ const changeQuantityInCart = async (req, res) => {
         return res.status(500).json({ message: 'Error removing order' });
     }
 };
+const payment = async(req,res) => {
+  try{
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: 'egp'
+    
+    });
+    res.json({clientSecret: paymentIntent.client_secret});
+  }
+  catch(error){
+    console.log(error);
+    res.status(500).json({message: 'Error creating payment intent'});
+  }
+}
 
 
-module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder };
+module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder, payment };

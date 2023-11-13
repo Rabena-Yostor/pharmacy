@@ -15,6 +15,8 @@ import SearchBar from './components/Searchbar';
 import ShopCart from './pages/ShopCart.js';
 import CheckoutPage from './pages/CheckoutPage.js';
 import ViewOrders from './pages/ViewOrders.js';
+import Payment from'./pages/Payment.js';
+import Completion from './components/Completion.js';
 function App() {
   return (
     <div className="App">
@@ -38,6 +40,8 @@ function App() {
             <Route path="/shop" element={<ShopCart />} />
             <Route path = "/checkout" element={<CheckoutPage />} />
             <Route path = "/viewOrders" element = {<ViewOrders />} />
+            <Route path = "/payment" element = {<Payment />} />
+            <Route path = "/completion" element = {<Completion />} />
 
       
           </Routes>
