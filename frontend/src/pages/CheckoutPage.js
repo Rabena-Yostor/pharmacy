@@ -21,7 +21,7 @@ function CheckoutPage() {
     useEffect(() => {
         const fetchCartData = async () => {
             try {
-                const username = 'yasser.aly';
+                const username = localStorage.getItem('username');
                 const response = await fetch(`http://localhost:4000/api/medicine/getCartItems/${username}`);
 
                 if (!response.ok) {
@@ -42,7 +42,7 @@ function CheckoutPage() {
     const fetchWalletBalance = async () => {
         try {
           // Replace 'username' with the actual username or get it dynamically
-          const username = 'yasser.aly';
+          const username = localStorage.getItem('username');
           const response = await fetch(`http://localhost:4000/api/medicine/getWallet/${username}`);
           
           if (!response.ok) {
@@ -59,7 +59,7 @@ function CheckoutPage() {
       };
     const fetchAddresses = async () => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username'); // Replace with the actual username or get it dynamically
             const response = await fetch(`http://localhost:4000/api/medicine/getAddresses/${username}`);
 
             if (!response.ok) {
@@ -84,7 +84,7 @@ function CheckoutPage() {
     };
     const handleAddAddress = async () => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username'); // Replace with the actual username or get it dynamically
 
             const response = await fetch(`http://localhost:4000/api/medicine/addAddress/${username}`, {
                 method: 'POST',
@@ -132,7 +132,7 @@ function CheckoutPage() {
 
     const handleChooseAddress = async (address) => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username');// Replace with the actual username or get it dynamically
 
             // Make a request to choose the selected address using the PUT method
             const response = await fetch(`http://localhost:4000/api/medicine/chooseAddress/${username}`, {
@@ -181,7 +181,7 @@ function CheckoutPage() {
 
     const handlePayWithWallet = async () => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username'); // Replace with the actual username or get it dynamically
 
             const response = await fetch(`http://localhost:4000/api/medicine/payWithWallet/${username}`, {
                 method: 'PUT',
@@ -217,7 +217,7 @@ function CheckoutPage() {
     };
     const handlePayCashOnDelivery = async () => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username'); // Replace with the actual username or get it dynamically
 
             const response = await fetch(`http://localhost:4000/api/medicine/checkOut/${username}`, {
                 method: 'PUT',
@@ -240,7 +240,7 @@ function CheckoutPage() {
 
             // Reload the page after 1 second
             setTimeout(() => {
-                window.location.reload();
+                window.location.href = '/shop';
             }, 1000);
         } catch (error) {
             console.error('Error paying cash on delivery:', error);
@@ -264,7 +264,7 @@ function CheckoutPage() {
     return (
         <div>
             <h2>Checkout</h2>
-            <p style={{ position: 'absolute', top: 22, right: 200 }}>Wallet Balance: {walletBalance} EGP</p>
+            <p style={{ position: 'absolute', top: 100, right: 900 }}>Wallet Balance: {walletBalance} EGP</p>
             <h3>Cart Items:</h3>
             <ul>
                 {cartItems.map((item) => (

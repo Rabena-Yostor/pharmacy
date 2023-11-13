@@ -8,7 +8,7 @@ function Completion(props) {
     const [successMessage, setSuccessMessage] = useState('');
     const handlePayWithCard = async () => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username');; // Replace with the actual username or get it dynamically
 
             const response = await fetch(`http://localhost:4000/api/medicine/checkOut/${username}`, {
                 method: 'PUT',

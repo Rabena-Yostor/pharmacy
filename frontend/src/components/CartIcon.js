@@ -13,7 +13,7 @@ function CartIcon() {
   useEffect(() => {
     const fetchCartData = async () => {
       try {
-        const username = 'yasser.aly';
+        const username = localStorage.getItem('username');
         const response = await fetch(`http://localhost:4000/api/medicine/getCartItems/${username}`);
 
         if (!response.ok) {
@@ -42,7 +42,7 @@ function CartIcon() {
 
   const handleRemoveItem = async (itemName) => {
     try {
-      const username = 'yasser.aly';
+      const username = localStorage.getItem('username');
       const response = await fetch(`http://localhost:4000/api/medicine/deleteMedicineFromCart/${username}/${itemName}`, {
         method: 'DELETE',
       });
@@ -66,7 +66,7 @@ function CartIcon() {
 
   const handleEditQuantity = async (itemName) => {
     try {
-      const username = 'yasser.aly';
+      const username = localStorage.getItem('username');
       const response = await fetch(`http://localhost:4000/api/medicine/changeQuantityInCart/${username}/${itemName}/${editedQuantity}`, {
         method: 'PUT',
       });
@@ -104,7 +104,7 @@ function CartIcon() {
   
 
   return (
-    <div style={{ position: 'fixed', top: '10px', right: '50px', cursor: 'pointer' }}>
+    <div style={{ position: 'fixed', top: '88px', right: '50px', cursor: 'pointer' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

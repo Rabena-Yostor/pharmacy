@@ -15,7 +15,7 @@ function Store() {
   const fetchWalletBalance = async () => {
     try {
       // Replace 'username' with the actual username or get it dynamically
-      const username = 'yasser.aly';
+      const username = localStorage.getItem('username');
       const response = await fetch(`http://localhost:4000/api/medicine/getWallet/${username}`);
       
       if (!response.ok) {
@@ -47,7 +47,7 @@ function Store() {
 
   const addToCart = async (medicineName) => {
     try {
-      const UserName = 'yasser.aly'; // Replace with the actual username or get it dynamically
+      const UserName = localStorage.getItem('username') ; 
       const response = await fetch(`http://localhost:4000/api/medicine/addMedicineToCart/${UserName}/${medicineName}`, {
         method: 'POST',
       });
@@ -80,8 +80,8 @@ function Store() {
   return (
     <div>
       <h1>Medicine Store</h1>
-      <p style={{ position: 'absolute', top: 22, right: 200 }}>Wallet Balance: {walletBalance} EGP</p>
-      <button style = {{position: 'absolute', top: 45, right: 600}} onClick={handleViewOrders}>View Orders</button> 
+      <p style={{ position: 'absolute', top: 100, right: 900 }}>Wallet Balance: {walletBalance} EGP</p>
+      <button style = {{position: 'absolute', top: 115, right: 600}} onClick={handleViewOrders}>View Orders</button> 
 
       <CartIcon />
       <ul>

@@ -17,6 +17,11 @@ import CheckoutPage from './pages/CheckoutPage.js';
 import ViewOrders from './pages/ViewOrders.js';
 import Payment from'./pages/Payment.js';
 import Completion from './components/Completion.js';
+import Login from './pages/Login';
+import ChangePassword from './pages/ChangePassword';
+import ResetPassword from './pages/ResetPassword';
+
+
 function App() {
   return (
     <div className="App">
@@ -25,8 +30,10 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route path="/peter" element={<HomePeter />} />
-            <Route path="/" element={<HomePage />} />
+          <Route path="/peter" element={<HomePeter />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/landing" element={<HomePage />} />
             <Route path="/hamouda" element={<Filter />} />
             <Route path="/view-medicines" element={<MedicineInfo />} />
             <Route path="/filter-medicines" element={<MedicineDetails />} />
@@ -36,6 +43,7 @@ function App() {
             <Route path="/malak" element={<ViewPatientInfo />} />
             <Route path="/khaled" element={<div><KhaledHome /><SearchBar /></div>} />
 
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route path="/shop" element={<ShopCart />} />
             <Route path = "/checkout" element={<CheckoutPage />} />

@@ -9,29 +9,44 @@ const{
     filterMedicine
 } = require('../controllers/medicineController')
 
-const{
+const {
     createPatient,
     getAllPatients,
+    Patientlogin,
+    PatientsignUp,
+    updatePatientPassword,
+    PatientsendOtpAndSetPassword,
     addAddress,
     getWallet,
-    
-}=require('../controllers/RegesterPatientController')
 
-const{
+} = require('../controllers/RegesterPatientController')
+
+const {
     createPharmacist,
-    getAllPharmacist
+    getAllPharmacist,
+    uploadMiddleware
 } = require('../controllers/requestPharmacistController')
 
 const{
     createAdmin,
-    getAllAdmins
+    getAllAdmins,
+    login,
+    signUp,
+    logout,
+    updateAdminPassword,
+    sendOtpAndSetPassword
 } = require('../controllers/addAdminController')
 
 const{
     viewPharmacistRequest,
     viewPharmacistsRequests,
     viewPatientInfo,
-    
+    rejectPharmacistRequest,
+    acceptPharmacistRequest,
+    PharmacistsignUp,
+    Pharmacistlogin,
+    updatePharmacistPassword,
+    PharmacisttsendOtpAndSetPassword
 } = require('../controllers/adminController')
 
 const {
@@ -90,8 +105,58 @@ router.post('/admin', createAdmin)
 router.get('/getAllPatients',getAllPatients)
 //get all admins
 router.get('/getAllAdmins',getAllAdmins)
+
+
+//login
+router.post('/admin/Login', login)
+
+//sign up
+router.post('/adminSignUp', signUp)
+
+//Patient login
+router.post('/Patient/Login', Patientlogin)
+
+//Patient sign up
+router.post('/PatientSignUp', PatientsignUp)
+
+//logout
+router.get('/logout', logout)
+
+//Pharmacist login
+router.post('/Pharmacist/Login', Pharmacistlogin)
+
+//Pharmacist sign up
+router.post('/PharmacistSignUp', PharmacistsignUp)
+
+//update admin password
+router.post('/updateAdminPassword', updateAdminPassword)
+
+//update patient password
+router.post('/updatePatientPassword', updatePatientPassword)
+
+//update pharmacist password
+router.post('/updatePharmacistPassword', updatePharmacistPassword)
+
+//send otp and set password admin
+router.post('/AdminsendOtpAndSetPassword', sendOtpAndSetPassword)
+
+//send otp and set password patient
+router.post('/PatientsendOtpAndSetPassword', PatientsendOtpAndSetPassword)
+
+//send otp and set password pharmacist
+router.post('/PharmacisttsendOtpAndSetPassword', PharmacisttsendOtpAndSetPassword)
+
+
+
+
 //get all pharmacist
 router.get('/getPharmacist',getAllPharmacist)
+
+//reject a pharmacist request
+router.delete('/rejectPharmacistRequest/:UserName', rejectPharmacistRequest)
+//accept a pharmacist request
+router.post('/acceptPharmacistRequest/:UserName', acceptPharmacistRequest)
+
 
 router.get("/viewPharmacistRequest", viewPharmacistRequest);
 router.get("/viewPharmacistsRequests", viewPharmacistsRequests);

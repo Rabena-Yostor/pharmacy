@@ -6,7 +6,7 @@ function ViewOrders() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+                const username = localStorage.getItem('username'); // Replace with the actual username or get it dynamically
                 const response = await fetch(`http://localhost:4000/api/medicine/viewOrders/${username}`);
 
                 if (!response.ok) {
@@ -25,7 +25,7 @@ function ViewOrders() {
 
     const handleCancelOrder = async (orderId) => {
         try {
-            const username = 'yasser.aly'; // Replace with the actual username or get it dynamically
+            const username = localStorage.getItem('username');// Replace with the actual username or get it dynamically
             const response = await fetch(`http://localhost:4000/api/medicine/removeOrder/${username}/${orderId}`, {
                 method: 'DELETE',
             });
