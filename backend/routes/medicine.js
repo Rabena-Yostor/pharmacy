@@ -97,7 +97,7 @@ router.get('/view',pharma.viewMedicineDetails )
 router.post('/createPatient',createPatient)
 
 //post new pharmacist
-router.post('/createPharmacist',createPharmacist)
+router.post('/createPharmacist',uploadMiddleware,createPharmacist)
 
 //post new admin 
 router.post('/admin', createAdmin)
