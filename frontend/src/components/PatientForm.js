@@ -21,7 +21,7 @@ const PatientForm = () => {
         
         let patient= {UserName,Name,Email,Password,DateOfBirth,Gender,MobileNumber,"EmergencyContact" :{FullName,MobileNumberEmergency,RelationToPatient}}
         console.log(patient)
-        const response = await fetch('http://localhost:4000/api/medicine/createPatient', {
+        const response = await fetch('http://localhost:4000/api/medicine/PatientSignUp', {
             method: 'POST',
            
             body: JSON.stringify(patient),

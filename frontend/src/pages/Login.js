@@ -61,6 +61,15 @@ const Login = () => {
         navigate('/reset-password');
       };
 
+
+        const handleRegisterAsPharmacist = () => {
+            // Navigate to the reset-password path
+            navigate('/hazem1');
+        }
+        const handleRegisterAsPatient = () => {
+            // Navigate to the reset-password path
+            navigate('/hazem3');
+        }
     return (
         <div>
             <h2>Login</h2>
@@ -88,6 +97,8 @@ const Login = () => {
                 
             </form>
             <button onClick={handleResetPassword}>Reset Password</button>
+            <button onClick={handleRegisterAsPharmacist}>Register as Pharmacist</button>
+            <button onClick={handleRegisterAsPatient}>Register as Patient</button>
         </div>
     );
 };

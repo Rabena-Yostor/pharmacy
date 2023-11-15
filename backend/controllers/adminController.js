@@ -5,6 +5,10 @@ const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const  Request = require('../models/requestRegisterAsPharmacist')
 
 // const createPharmacistRequest = async (req, res) => {
 //     try {
@@ -128,6 +132,21 @@ const createToken = (name) => {
     });
 };
 
+// Set up storage for uploaded files
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const uploadDirectory = path.join(__dirname, '../../frontend/public/uploads');
+        cb(null, uploadDirectory);
+    },
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      const filename = `${Date.now()}-${file.fieldname}${ext}`;
+      cb(null, filename);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+
 const PharmacistsignUp = async (req, res) => {
     const { UserName, Password,
         Name,
@@ -135,10 +154,27 @@ const PharmacistsignUp = async (req, res) => {
         DateOfBirth,
         HourlyRate,
         AffiliatedHospital, Education } = req.body;
+        const idFile = req.files['idFile'][0];
+        const degreeFile = req.files['degreeFile'][0];
+        const licenseFile = req.files['licenseFile'][0];
+        const idFileData = fs.readFileSync(idFile.path);
+        const degreeFileData = fs.readFileSync(degreeFile.path);
+        const licenseFileData = fs.readFileSync(licenseFile.path);
     try {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(Password, salt);
-        const user = await pharmacist.create({ UserName, Password: hashedPassword, Name, Email, DateOfBirth, HourlyRate, AffiliatedHospital, Education });
+        const user = await Request.create({ UserName, Password: hashedPassword, Name, Email, DateOfBirth, HourlyRate, AffiliatedHospital, Education,  idFile: {
+            data: idFileData,
+            contentType: idFile.mimetype
+        },
+        degreeFile: {
+            data: degreeFileData,
+            contentType: degreeFile.mimetype
+        },
+        licenseFile: {
+            data: licenseFileData,
+            contentType: licenseFile.mimetype
+        } });
         const token = createToken(user.UserName);
 
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });

@@ -25,7 +25,7 @@ const medicineSchema = new Schema({
     },
     imageUrl:{
         type: String,
-       
+       default: 'https://www.default.com'
       },
     price: {
         type: Number,

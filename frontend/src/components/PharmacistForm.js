@@ -32,7 +32,7 @@ const PharmacistForm = () => {
         formData.append('licenseFile', licenseFile);
 
         try {
-            const response = await fetch('http://localhost:4000/api/medicine/createPharmacist', {
+            const response = await fetch('http://localhost:4000/api/medicine/PharmacistsignUp', {
                 method: 'POST',
                 body: formData,
             });

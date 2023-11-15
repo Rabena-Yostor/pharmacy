@@ -126,7 +126,7 @@ router.get('/logout', logout)
 router.post('/Pharmacist/Login', Pharmacistlogin)
 
 //Pharmacist sign up
-router.post('/PharmacistSignUp', PharmacistsignUp)
+router.post('/PharmacistSignUp',uploadMiddleware, PharmacistsignUp)
 
 //update admin password
 router.post('/updateAdminPassword', updateAdminPassword)

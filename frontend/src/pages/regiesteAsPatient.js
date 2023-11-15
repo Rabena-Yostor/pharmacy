@@ -8,7 +8,7 @@ const RegiesteAsPatient = () => {
 
 useEffect(() => {   
     const fetchPatient = async () => {
-        const response = await fetch('http://localhost:4000/api/medicine/createPatient')
+        const response = await fetch('http://localhost:4000/api/medicine/PatientSignUp')
         const json = await response.json()
         if(response.ok){
             setPatient(json)
