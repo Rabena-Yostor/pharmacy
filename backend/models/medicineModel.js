@@ -42,7 +42,11 @@ const medicineSchema = new Schema({
     sales: {
         type: Number,
        
-    },    
+    }, 
+    archived: {
+        type: Boolean,
+        default: false
+    }   
 
 }, { timestamps: true })
 

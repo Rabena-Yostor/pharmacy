@@ -6,7 +6,10 @@ const{
     addMedicine,
     deleteMedicine,
     updateMedicine,
-    filterMedicine
+    filterMedicine,
+    getAllMedicinesPharmacist,
+    archiveMedicine,
+    unarchiveMedicine
 } = require('../controllers/medicineController')
 
 const {
@@ -75,6 +78,8 @@ const admin = require('../controllers/admin');
 const router = express.Router()
 
 router.get('/getAllMedicines',getAllMedicines)
+
+router.get('/getAllMedicinesPharmacist',getAllMedicinesPharmacist)
 
 router.get('/getMedicine/:id', getMedicine)
 
@@ -146,7 +151,9 @@ router.post('/PatientsendOtpAndSetPassword', PatientsendOtpAndSetPassword)
 //send otp and set password pharmacist
 router.post('/PharmacisttsendOtpAndSetPassword', PharmacisttsendOtpAndSetPassword)
 
+router.post('/archiveMedicine/:id', archiveMedicine)
 
+router.post('/unarchiveMedicine/:id', unarchiveMedicine)
 
 
 //get all pharmacist

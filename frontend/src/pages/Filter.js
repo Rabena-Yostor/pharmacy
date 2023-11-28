@@ -9,7 +9,7 @@ function Filter() {
   // Fetch all medicines
   const fetchMedicines = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/medicine/getAllMedicines');
+      const response = await fetch('http://localhost:4000/api/medicine/getAllMedicinesPharmacist');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -37,6 +37,46 @@ function Filter() {
     }
   };
 
+  // Archive a medicine
+  const archive = async (medicineId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/medicine/archiveMedicine/${medicineId}`, {
+        method: 'post',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data)
+      //const updatedMedicines = medicines.filter((medicine) => medicine.name !== medicineName);
+      //setMedicines(updatedMedicines);
+    } catch (error) {
+      console.error('Error archiving medicine:', error);
+    }
+  };
+
+  // Unarchive a medicine
+  const unarchive = async (medicineId) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/medicine/unarchiveMedicine/${medicineId}`, {
+        method: 'post',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data)
+      // const updatedMedicines = medicines.filter((medicine) => medicine.name !== medicineName);
+      // setMedicines(updatedMedicines);
+    } catch (error) {
+      console.error('Error unarchiving medicine:', error);
+    }
+  };
+
   useEffect(() => {
     fetchMedicines();
   }, []); // Fetch medicines when the component mounts
@@ -60,7 +100,7 @@ function Filter() {
             ))
           : medicines.map((medicine) => (
               <li key={medicine._id}>
-                {medicine.name} - {medicine.manufacturer} - {medicine.dosage} - {medicine.medicinalUse}
+                {medicine.name} - {medicine.manufacturer} - {medicine.dosage} - {medicine.medicinalUse}     {medicine.archived === false && <button onClick={() => {archive(medicine._id); window.location.reload();}}>Archive</button>} {medicine.archived === true && <button onClick={() => {unarchive(medicine._id); window.location.reload();}}>Unarchive</button>}
               </li>
             ))}
       </ul>
