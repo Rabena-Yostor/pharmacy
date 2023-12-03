@@ -2,6 +2,12 @@
 const Medicine = require('../models/medicineModel.js');
 const Patient = require('../models/regesterAsPatient.js');
 const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
+const Pharmacist = require('../models/pharmacists.js');
+const Notification = require('../models/notificationModel.js');
+
+//Checker for a out of stock medicine
+var Empty = false;
+
 // add an over the counter medicine to cart
 
 const addMedicineToCart = async (req, res) => {
@@ -25,17 +31,25 @@ const addMedicineToCart = async (req, res) => {
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
+    //Find a pharmacist with the UserName final.final
+    const pharmacist = await Pharmacist.findOne({ UserName: 'final.final' });
     if (medicine.quantity === 0) {
-      return res.status(400).json({ message: 'No quantity of the medicine available' });
+      //Send a notification to the pharmacist
+      const notification = new Notification({
+        recipient_id: pharmacist._id,
+        message: `The medicine ${medicine.name} is out of stock`,
+      });
+      await notification.save();
+      return res.status(400).json({ message: 'No quantity of the medicine available and a Pharmacist has been notified' });
     }
     if (medicine.prescriptionRequired === true) {
       return res.status(400).json({ message: 'Prescription required' });
     }
     if (medicine.quantity > 0) {
-          medicine.quantity -= 1;
-          console.log('Medicine Sales:', medicine.sales);
-          medicine.sales += 1;
-          console.log('Medicine Sales Updated:', medicine.sales);
+      medicine.quantity -= 1;
+      console.log('Medicine Sales:', medicine.sales);
+      medicine.sales += 1;
+      console.log('Medicine Sales Updated:', medicine.sales);
       console.log(' Patient Cart: ');
       patient.cart.items.forEach(item => {
         console.log('Medicine:', item.medicine);
@@ -91,8 +105,10 @@ const getCartItems = async (req, res) => {
       return res.status(404).json({ message: 'Patient not found' });
     }
     console.log('Total Amount', patient.cart.totalAmount);
-    return res.status(200).json({ cartItems: patient.cart.items
-      , totalAmount: patient.cart.totalAmount });
+    return res.status(200).json({
+      cartItems: patient.cart.items
+      , totalAmount: patient.cart.totalAmount
+    });
 
   }
   catch (error) {
@@ -104,11 +120,11 @@ const getCartItems = async (req, res) => {
 const deleteMedicineFromCart = async (req, res) => {
   try {
     const { UserName, name } = req.params;
-  //  console.log('Params:', UserName, name);
+    //  console.log('Params:', UserName, name);
     const patient = await Patient.findOne({ UserName });
-   // console.log('Patient:', patient);
+    // console.log('Patient:', patient);
     const medicine = await Medicine.findOne({ name });
-   // console.log('Medicine:', medicine);
+    // console.log('Medicine:', medicine);
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
@@ -120,7 +136,7 @@ const deleteMedicineFromCart = async (req, res) => {
     const removedItem = patient.cart.items[removedItemIndex];
     console.log('Removed Item:', removedItem);
     console.log('Removed Item Price:', medicine.price);
-console.log('Removed Item Quantity:', removedItem.quantity);
+    console.log('Removed Item Quantity:', removedItem.quantity);
     const price = medicine.price * removedItem.quantity;
     console.log('Price:', price);
     patient.cart.totalAmount -= medicine.price * removedItem.quantity;
@@ -128,12 +144,12 @@ console.log('Removed Item Quantity:', removedItem.quantity);
     patient.cart.items.splice(removedItemIndex, 1);
     medicine.quantity = medicine.quantity + removedItem.quantity;
     medicine.sales = medicine.sales - removedItem.quantity;
-    console.log('medicine quantity:', medicine.quantity );
+    console.log('medicine quantity:', medicine.quantity);
     await patient.save();
     await medicine.save();
     return res.status(200).json({ message: 'Item removed from the cart successfully' });
   }
-  catch(error) {
+  catch (error) {
     return res.status(500).json({ message: 'Error removing item from cart' });
 
   }
@@ -155,22 +171,22 @@ const zeroAmount = async (req, res) => { /*Used it to Zero the amount for fronte
     return res.status(200).json({ message: 'Total Amount is now 0' });
 
   }
-  catch(error) {
+  catch (error) {
     return res.status(500).json({ message: 'Error Zeroing the cart' });
   }
 }
 
 const changeQuantityInCart = async (req, res) => {
   try {
-    
-    const {UserName,name,newQuantity} = req.params;
+
+    const { UserName, name, newQuantity } = req.params;
     const patient = await Patient.findOne({ UserName });
     const medicine = await Medicine.findOne({ name });
     // console.log('Medicine:', medicine);
     // console.log('Patient:', patient);
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
-    }   
+    }
     const cartItemIndex = patient.cart.items.findIndex(item => item.medicine === name);
     console.log('Cart Item Index:', cartItemIndex);
     if (cartItemIndex === -1) {
@@ -178,36 +194,36 @@ const changeQuantityInCart = async (req, res) => {
     }
     //console.log('hi');
     const cartItem = patient.cart.items[cartItemIndex];
-     console.log('Cart Item:', cartItem);
-     const originalQuantity = cartItem.quantity;
-     console.log('Original Quantity:', originalQuantity);
+    console.log('Cart Item:', cartItem);
+    const originalQuantity = cartItem.quantity;
+    console.log('Original Quantity:', originalQuantity);
     cartItem.quantity = newQuantity;
-     console.log('New Quantity:', newQuantity);
-     console.log('Cart Item UPDATED:', cartItem); 
+    console.log('New Quantity:', newQuantity);
+    console.log('Cart Item UPDATED:', cartItem);
 
-     
-    
+
+
     const cartQuant = newQuantity - originalQuantity; // new = 10 , old = 5 , cartQuant = 5
-    const negative= newQuantity;
-    if(cartQuant > medicine.quantity) {
+    const negative = newQuantity;
+    if (cartQuant > medicine.quantity) {
       return res.status(400).json({ message: 'No quantity of the medicine available' });
     }
-    if(cartQuant === 0){
+    if (cartQuant === 0) {
       return res.status(400).json({ message: 'Quantity is already the same' });
 
     }
     const originalNegative = 0 - originalQuantity;
-    if(cartQuant === originalNegative){
+    if (cartQuant === originalNegative) {
       return res.status(400).json({ message: 'Press the remove button instead of changing the quantity to zero.' });
     }
-    if(negative < 0){
+    if (negative < 0) {
       return res.status(400).json({ message: 'Quantity cannot be negative' });
     }
     console.log('Cart Quantity:', cartQuant);
     const newAmount = medicine.price * cartQuant;
     console.log('New Amount:', newAmount);
     patient.cart.totalAmount += newAmount;
-    
+
     medicine.quantity = medicine.quantity - cartQuant;
     medicine.sales = medicine.sales + cartQuant;
     await patient.save();
@@ -219,188 +235,188 @@ const changeQuantityInCart = async (req, res) => {
   }
 }
 
-  const getAddresses = async (req, res) => {
-    try {
-      const { UserName } = req.params;
-  
-      const patient = await Patient.findOne({ UserName });
-  
-      if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
-      }
-  
-      const addresses = patient.addresses;
-  
-      return res.status(200).json({ addresses });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
-  };
+const getAddresses = async (req, res) => {
+  try {
+    const { UserName } = req.params;
 
-  const chooseAddress = async (req, res) => {
-    try{
-      const { UserName } = req.params;
-      const { street, city, state, zipCode } = req.body;
-      console.log('Params:', UserName, street, city, state, zipCode)
-      const patient = await Patient.findOne({ UserName });
-      if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
-      }
-      console.log('Patient cart address:', patient.cart.address);
-      patient.cart.address.street = street;
-      patient.cart.address.city = city;
-      patient.cart.address.state = state;
-      patient.cart.address.zipCode = zipCode;
+    const patient = await Patient.findOne({ UserName });
 
-      await patient.save();
-      return res.status(200).json({ message: 'Address chosen successfully' });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
     }
-    catch(error){
-      return res.status(500).json({ message: 'Error choosing address' });
-    }
+
+    const addresses = patient.addresses;
+
+    return res.status(200).json({ addresses });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
-
-  const payWithWallet = async (req, res) => {
-    try{
-      const { UserName } = req.params;
-      const patient = await Patient.findOne({ UserName });
-      if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
-      }
-      const wallet = patient.wallet;
-      const totalAmount = patient.cart.totalAmount;
-      // const totalAmount2 = 99999999;
-      console.log('Wallet:', wallet);
-      console.log('Total Amount:', totalAmount);
-      if(wallet < totalAmount){
-        return res.status(400).json({ message: 'Not enough money in wallet' });
-      }
-      patient.wallet -= totalAmount;
-      console.log('Wallet:', patient.wallet); 
-      const cartItems = patient.cart.items;
-  
-      const address = patient.cart.address;
-      const order = {
-        items: cartItems,
-        totalAmount: totalAmount,
-        address: address,
-        status: 'Pending',
-      };
-      
-      patient.orders.push(order);
-      console.log('Order:', patient.orders);
-      patient.cart.items = [];
-      patient.cart.totalAmount = 0;
-      patient.cart.address.street = '';
-      patient.cart.address.city = '';
-      patient.cart.address.state = '';
-      patient.cart.address.zipCode = '';
-      await patient.save();
-      return res.status(200).json({ message: 'Paid with wallet successfully' });
-    }
-    catch(error){
-      return res.status(500).json({ message: 'Error paying with wallet' });
-    }
-  }
-  const checkOut = async (req, res) => {
-    try{
-      const { UserName } = req.params;
-      
-    
-      const patient = await Patient.findOne({ UserName });
-      if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
-      }
-      const cartItems = patient.cart.items;
-      const totalAmount = patient.cart.totalAmount;
-      const address = patient.cart.address;
-      const order = {
-        items: cartItems,
-        totalAmount: totalAmount,
-        address: address,
-        status: 'Pending',
-      };
-      
-      patient.orders.push(order);
-      console.log('Order:', patient.orders);
-      patient.cart.items = [];
-      patient.cart.totalAmount = 0;
-      patient.cart.address.street = '';
-      patient.cart.address.city = '';
-      patient.cart.address.state = '';
-      patient.cart.address.zipCode = '';
-      await patient.save();
-      return res.status(200).json({ message: 'Checked out successfully' });
-
-    }
-    catch(error){
-      return res.status(500).json({ message: 'Error checking out' });
-    }
-  }
-
-  const viewOrders = async (req, res) => {
-    try{
-      const{UserName} = req.params;
-      const patient = await Patient.findOne({ UserName });
-      if (!patient) {
-        return res.status(404).json({ message: 'Patient not found' });
-      }
-      const orders = patient.orders;
-      return res.status(200).json({ orders });
-
-    }
-    catch(error){
-      return res.status(500).json({ message: 'Error viewing orders' });
-    }
-  }
-
-  const removeOrder = async (req, res) => {
-    try {
-        const { UserName, orderId } = req.params;
-        console.log('Params:', UserName, orderId);
-        const patient = await Patient.findOne({ UserName });
-        console.log('Patient:', patient);
-        if (!patient) {
-            return res.status(404).json({ message: 'Patient not found' });
-        }
-
-        // Use findIndex to get the index of the order with the specified orderId
-        const orderIndex = patient.orders.findIndex(order => order._id.toString() === orderId);
-        console.log('Order Index:', orderIndex);
-
-        // Check if the order was found
-        if (orderIndex === -1) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
-        // Remove the order from the orders array using splice
-        const removedOrder = patient.orders.splice(orderIndex, 1);
-
-        // Save the updated patient document
-        await patient.save();
-
-        // Return the removed order or a success message
-        return res.status(200).json({ message: 'Order removed successfully', removedOrder });
-    } catch (error) {
-        console.error('Error removing order:', error);
-        return res.status(500).json({ message: 'Error removing order' });
-    }
 };
-const payment = async(req,res) => {
-  try{
+
+const chooseAddress = async (req, res) => {
+  try {
+    const { UserName } = req.params;
+    const { street, city, state, zipCode } = req.body;
+    console.log('Params:', UserName, street, city, state, zipCode)
+    const patient = await Patient.findOne({ UserName });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+    console.log('Patient cart address:', patient.cart.address);
+    patient.cart.address.street = street;
+    patient.cart.address.city = city;
+    patient.cart.address.state = state;
+    patient.cart.address.zipCode = zipCode;
+
+    await patient.save();
+    return res.status(200).json({ message: 'Address chosen successfully' });
+  }
+  catch (error) {
+    return res.status(500).json({ message: 'Error choosing address' });
+  }
+}
+
+const payWithWallet = async (req, res) => {
+  try {
+    const { UserName } = req.params;
+    const patient = await Patient.findOne({ UserName });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+    const wallet = patient.wallet;
+    const totalAmount = patient.cart.totalAmount;
+    // const totalAmount2 = 99999999;
+    console.log('Wallet:', wallet);
+    console.log('Total Amount:', totalAmount);
+    if (wallet < totalAmount) {
+      return res.status(400).json({ message: 'Not enough money in wallet' });
+    }
+    patient.wallet -= totalAmount;
+    console.log('Wallet:', patient.wallet);
+    const cartItems = patient.cart.items;
+
+    const address = patient.cart.address;
+    const order = {
+      items: cartItems,
+      totalAmount: totalAmount,
+      address: address,
+      status: 'Pending',
+    };
+
+    patient.orders.push(order);
+    console.log('Order:', patient.orders);
+    patient.cart.items = [];
+    patient.cart.totalAmount = 0;
+    patient.cart.address.street = '';
+    patient.cart.address.city = '';
+    patient.cart.address.state = '';
+    patient.cart.address.zipCode = '';
+    await patient.save();
+    return res.status(200).json({ message: 'Paid with wallet successfully' });
+  }
+  catch (error) {
+    return res.status(500).json({ message: 'Error paying with wallet' });
+  }
+}
+const checkOut = async (req, res) => {
+  try {
+    const { UserName } = req.params;
+
+
+    const patient = await Patient.findOne({ UserName });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+    const cartItems = patient.cart.items;
+    const totalAmount = patient.cart.totalAmount;
+    const address = patient.cart.address;
+    const order = {
+      items: cartItems,
+      totalAmount: totalAmount,
+      address: address,
+      status: 'Pending',
+    };
+
+    patient.orders.push(order);
+    console.log('Order:', patient.orders);
+    patient.cart.items = [];
+    patient.cart.totalAmount = 0;
+    patient.cart.address.street = '';
+    patient.cart.address.city = '';
+    patient.cart.address.state = '';
+    patient.cart.address.zipCode = '';
+    await patient.save();
+    return res.status(200).json({ message: 'Checked out successfully' });
+
+  }
+  catch (error) {
+    return res.status(500).json({ message: 'Error checking out' });
+  }
+}
+
+const viewOrders = async (req, res) => {
+  try {
+    const { UserName } = req.params;
+    const patient = await Patient.findOne({ UserName });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+    const orders = patient.orders;
+    return res.status(200).json({ orders });
+
+  }
+  catch (error) {
+    return res.status(500).json({ message: 'Error viewing orders' });
+  }
+}
+
+const removeOrder = async (req, res) => {
+  try {
+    const { UserName, orderId } = req.params;
+    console.log('Params:', UserName, orderId);
+    const patient = await Patient.findOne({ UserName });
+    console.log('Patient:', patient);
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    // Use findIndex to get the index of the order with the specified orderId
+    const orderIndex = patient.orders.findIndex(order => order._id.toString() === orderId);
+    console.log('Order Index:', orderIndex);
+
+    // Check if the order was found
+    if (orderIndex === -1) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Remove the order from the orders array using splice
+    const removedOrder = patient.orders.splice(orderIndex, 1);
+
+    // Save the updated patient document
+    await patient.save();
+
+    // Return the removed order or a success message
+    return res.status(200).json({ message: 'Order removed successfully', removedOrder });
+  } catch (error) {
+    console.error('Error removing order:', error);
+    return res.status(500).json({ message: 'Error removing order' });
+  }
+};
+const payment = async (req, res) => {
+  try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: req.body.amount,
       currency: 'egp'
-    
+
     });
-    res.json({clientSecret: paymentIntent.client_secret});
+    res.json({ clientSecret: paymentIntent.client_secret });
   }
-  catch(error){
+  catch (error) {
     console.log(error);
-    res.status(500).json({message: 'Error creating payment intent'});
+    res.status(500).json({ message: 'Error creating payment intent' });
   }
 }
 
 
-module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder, payment };
+module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses, zeroAmount, checkOut, chooseAddress, payWithWallet, viewOrders, removeOrder, payment };
