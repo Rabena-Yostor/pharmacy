@@ -25,6 +25,7 @@ export default function ViewSalesReport() {
             // Validate that both month and year are selected
             if (!selectedMonth || !selectedYear) {
                 console.error('Please select both month and year.');
+                console.log(new Date().getMonth()+1);
                 return;
             }
 
@@ -51,18 +52,18 @@ export default function ViewSalesReport() {
             <label>Select Month: </label>
             <select value={selectedMonth} onChange={handleMonthChange}>
                 <option value="">-- Select Month --</option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">Septemper</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">Decemeber</option>
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">Septemper</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">Decemeber</option>
                 
             </select>
             <br />
@@ -79,10 +80,13 @@ export default function ViewSalesReport() {
             <button onClick={handleSubmit}>Submit</button>
             <div className="requests">
                 {data && data.map((request) => (
-                        <div key={request._id}>
-                        <p>Medicine Name: {request.yearx    }, Quantity: {request.quantity}</p>
+                    request.map((request1) => (
+                        request1.items.map((request2) => (
+                        <div key={request2._id}>
+                        <p>{request1.notes}</p>
+                        <p>Medicine Name: {request2.medicine}, Quantity: {request2.quantity}</p>
                     </div>
-                    ))} 
+                    ))))))} 
             </div>
             
         </div>
