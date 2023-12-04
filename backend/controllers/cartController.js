@@ -1,6 +1,7 @@
 
 const Medicine = require('../models/medicineModel.js');
 const Patient = require('../models/regesterAsPatient.js');
+const Sales = require('../models/sales.js');
 const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
 // add an over the counter medicine to cart
 
@@ -315,6 +316,27 @@ const changeQuantityInCart = async (req, res) => {
       const cartItems = patient.cart.items;
       const totalAmount = patient.cart.totalAmount;
       const address = patient.cart.address;
+
+       // Create a new sale using the sales schema
+       console.log(cartItems)
+       console.log("break!")
+       const year = new Date().getFullYear();
+       const month = new Date().getMonth();
+    const sale = new Sales({
+      items: cartItems.map(item => ({
+        medicine: item.medicine,
+        quantity: item.quantity,
+        //totalPrice: item.totalPrice,
+      })),
+      totalSalePrice: totalAmount,
+      year: year,
+      month: month,
+      notes: `Sale for patient ${UserName}`,
+    });
+
+    // Save the sale to the database
+    await sale.save();
+
       const order = {
         items: cartItems,
         totalAmount: totalAmount,
@@ -323,7 +345,7 @@ const changeQuantityInCart = async (req, res) => {
       };
       
       patient.orders.push(order);
-      console.log('Order:', patient.orders);
+      //console.log('Order:', patient.orders);
       patient.cart.items = [];
       patient.cart.totalAmount = 0;
       patient.cart.address.street = '';

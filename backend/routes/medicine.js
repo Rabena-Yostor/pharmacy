@@ -53,7 +53,8 @@ const{
 } = require('../controllers/adminController')
 
 const {
-    searchMedicine
+    searchMedicine,
+    filterSales
 } = require('../controllers/generalController')
 
 const {
@@ -170,6 +171,7 @@ router.get("/viewPharmacistsRequests", viewPharmacistsRequests);
 router.get("/searchMedicine", searchMedicine);
 router.get('/patientinfo',viewPatientInfo)
 
+router.get('/salesReport/:year/:month', filterSales);
 
 //Hamouda Cart!
 router.post('/addMedicineToCart/:UserName/:name', addMedicineToCart);

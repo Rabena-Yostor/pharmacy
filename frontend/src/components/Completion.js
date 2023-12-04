@@ -11,7 +11,7 @@ function Completion(props) {
             const username = localStorage.getItem('username');; // Replace with the actual username or get it dynamically
 
             const response = await fetch(`http://localhost:4000/api/medicine/checkOut/${username}`, {
-                method: 'PUT',
+                method: 'put',
             });
 
             if (!response.ok) {

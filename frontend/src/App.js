@@ -20,6 +20,7 @@ import Completion from './components/Completion.js';
 import Login from './pages/Login';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword';
+import ViewSalesReport from './pages/viewSalesReport';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Route path="/hazem2" element={<AddAdmin />} />
             <Route path="/hazem3" element={<RegiesteAsPatient />} />
             <Route path="/malak" element={<ViewPatientInfo />} />
+            <Route path="/viewSalesReport" element={<ViewSalesReport />} />
             <Route path="/khaled" element={<div><KhaledHome /><SearchBar /></div>} />
 
             <Route path="/reset-password" element={<ResetPassword />} />

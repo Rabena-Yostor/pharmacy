@@ -46,6 +46,9 @@ function HomePage() {
       <Link to="/khaled">
         <button>search and view (khaled)</button>
       </Link>
+      <Link to="/viewSalesReport">
+        <button>View Sales Report</button>
+      </Link>
       <br />
       <hr />
       <Link to="/change-password">

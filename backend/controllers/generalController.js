@@ -1,5 +1,7 @@
 const Medicine = require('../models/medicineModel.js');
 const { default: mongoose } = require('mongoose');
+const { response } = require('express');
+const sales = require ('../models/sales.js');
 
 // const addMedicine = async (req, res) => {
 //     try{
@@ -34,4 +36,22 @@ const searchMedicine = async (req, res) => {
     //   });
 }
 
-module.exports = {searchMedicine};
+const filterSales = async (req, res) => {
+    const month = req.params.month
+    const year = req.params.year
+    try {
+        const Sales = await sales.find({ year: year, month: month });
+        //console.log(Sales)
+        if (Sales == null){
+            console.log("sales is null")
+            res.status(404).json({ message: "Sales not found" });
+        }
+        else{
+            res.status(200).json([Sales]);
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+module.exports = {searchMedicine, filterSales};
