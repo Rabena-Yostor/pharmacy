@@ -6,11 +6,11 @@ function HomePage() {
   const username = localStorage.getItem('username');
   // Change userType to the correct user type
   var type = "";
-  if(userType === "admin") {
+  if (userType === "admin") {
     type = "Admin";
-  } else if(userType === "pharmacist") { 
+  } else if (userType === "pharmacist") {
     type = "Pharmacist";
-  } else  {
+  } else {
     type = "";
   }
   return (
@@ -45,6 +45,9 @@ function HomePage() {
       </Link>
       <Link to="/khaled">
         <button>search and view (khaled)</button>
+      </Link>
+      <Link to="/notifications">
+        <button>Notifications</button>
       </Link>
       <br />
       <hr />

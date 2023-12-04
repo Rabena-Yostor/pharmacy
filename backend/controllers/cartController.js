@@ -4,26 +4,23 @@ const Patient = require('../models/regesterAsPatient.js');
 const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
 const Pharmacist = require('../models/pharmacists.js');
 const Notification = require('../models/notificationModel.js');
+const nodemailer = require('nodemailer');
 
-//Checker for a out of stock medicine
-var Empty = false;
+
 
 // add an over the counter medicine to cart
 
 const addMedicineToCart = async (req, res) => {
   try {
     const { UserName, name } = req.params;
-    console.log('Params:', UserName, name);
 
     const medicine = await Medicine.findOne({ name });
-    console.log('Medicine:', medicine);
 
     if (!medicine) {
       return res.status(404).json({ message: 'Medicine not found' });
     }
 
     const patient = await Patient.findOne({ UserName });
-    console.log('Patient:', patient);
 
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
@@ -38,8 +35,30 @@ const addMedicineToCart = async (req, res) => {
       const notification = new Notification({
         recipient_id: pharmacist._id,
         message: `The medicine ${medicine.name} is out of stock`,
+        timestamp: Date.now(),
       });
       await notification.save();
+      // Send OTP to the user's email
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'peteraclsender@gmail.com',
+          pass: 'tayr rzwl yvip tqjt',
+        },
+      });
+      const mailOptions = {
+        from: 'peteraclsender@gmail.com',
+        to: pharmacist.Email,
+        subject: 'Out of stock notification',
+        text: `The medicine ${medicine.name} is out of stock`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(500).json({ error: 'Error sending OTP via email' });
+        }
+        res.status(200).json({ message: 'OTP sent successfully' });
+      });
       return res.status(400).json({ message: 'No quantity of the medicine available and a Pharmacist has been notified' });
     }
     if (medicine.prescriptionRequired === true) {
@@ -47,19 +66,13 @@ const addMedicineToCart = async (req, res) => {
     }
     if (medicine.quantity > 0) {
       medicine.quantity -= 1;
-      console.log('Medicine Sales:', medicine.sales);
       medicine.sales += 1;
-      console.log('Medicine Sales Updated:', medicine.sales);
-      console.log(' Patient Cart: ');
       patient.cart.items.forEach(item => {
-        console.log('Medicine:', item.medicine);
-        console.log('Quantity:', item.quantity);
       });
       if (patient.cart.items.some(item => item.medicine === medicine.name)) {
         const existingCartItem = patient.cart.items.find(item => item.medicine === medicine.name);
         existingCartItem.quantity += 1;
         patient.cart.totalAmount += medicine.price;
-        console.log('Updated Cart:', patient.cart);
         await patient.save();
         await medicine.save();
         return res.status(200).json({ message: 'Medicine added to cart successfully' });
@@ -71,11 +84,9 @@ const addMedicineToCart = async (req, res) => {
           quantity: 1,
         }
 
-        console.log('Cart Item:', cartItem);
         patient.cart.items.push(cartItem);
         patient.cart.totalAmount += medicine.price;
 
-        console.log('Updated Cart:', patient.cart);
         try {
           await patient.save();
           await medicine.save();

@@ -115,7 +115,7 @@ router.get('/getAllAdmins',getAllAdmins)
 //Notifications
 router.post('/createNotification', createNotification);
 router.delete('/deleteNotification/:notificationId', deleteNotification);
-router.get('/getAllNotifications', getAllNotifications);
+router.post('/getAllNotifications', getAllNotifications);
 
 
 //login

@@ -1,4 +1,5 @@
 const Notification = require('../models/notificationModel');
+const Pharmacist = require('../models/pharmacists')
 
 const createNotification = async (req, res) => {
   try {
@@ -54,7 +55,23 @@ const deleteNotification = async (req, res) => {
 //Get all notifications
 const getAllNotifications = async (req, res) => {
   try {
-    const notifications = await Notification.find({});
+    const { username } = req.body;
+
+    // Validate the username
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required in the request body' });
+    }
+
+    // Find the pharmacist by username
+    const pharmacist = await Pharmacist.findOne({ UserName: username });
+    console.log(pharmacist)
+
+    if (!pharmacist) {
+      return res.status(404).json({ message: 'Pharmacist not found' });
+    }
+
+    // Get all notifications for the pharmacist based on their ID
+    const notifications = await Notification.find({ recipient_id: pharmacist._id });
 
     return res.status(200).json({ notifications });
   } catch (error) {
@@ -62,5 +79,7 @@ const getAllNotifications = async (req, res) => {
     return res.status(500).json({ message: 'Error getting notifications' });
   }
 };
+
+
 
 module.exports = { createNotification, deleteNotification , getAllNotifications};
