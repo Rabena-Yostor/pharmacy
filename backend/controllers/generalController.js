@@ -36,7 +36,7 @@ const searchMedicine = async (req, res) => {
     //   });
 }
 
-const filterSales = async (req, res) => {
+const viewSales = async (req, res) => {
     const month = req.params.month
     const year = req.params.year
     try {
@@ -54,4 +54,44 @@ const filterSales = async (req, res) => {
     }
 }
 
-module.exports = {searchMedicine, filterSales};
+const filterSalesByDay = async (req, res) => {
+    const month = req.params.month
+    const year = req.params.year
+    const day = req.params.day
+    try {
+        const Sales = await sales.find({ year: year, month: month, day: day });
+        //console.log(Sales)
+        if (Sales == null){
+            console.log("sales is null")
+            res.status(404).json({ message: "Sales not found" });
+        }
+        else{
+            res.status(200).json([Sales]);
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+const filterSalesByName = async (req, res) => {
+    const month = req.params.month
+    const year = req.params.year
+    const name = req.params.name
+    console.log("entered here: ", name)
+    console.log("entered here: ", month)
+    try {
+        const Sales = await sales.find({ year: year, month: month, 'items.medicine': { $in: [name] } });
+        //console.log(Sales)
+        if (Sales == null){
+            console.log("sales is null")
+            res.status(404).json({ message: "Sales not found" });
+        }
+        else{
+            res.status(200).json([Sales]);
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+module.exports = {searchMedicine, viewSales, filterSalesByDay, filterSalesByName};

@@ -36,6 +36,10 @@ const salesSchema = new mongoose.Schema({
     type: String,
     default: Date.now.getMonth,
   },
+  day: {
+    type: String,
+    default: Date.now.getDay,
+  },
   // Additional details about the sale, if needed
   notes: {
     type: String,

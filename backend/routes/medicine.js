@@ -54,7 +54,9 @@ const{
 
 const {
     searchMedicine,
-    filterSales
+    viewSales,
+    filterSalesByDay,
+    filterSalesByName
 } = require('../controllers/generalController')
 
 const {
@@ -171,7 +173,11 @@ router.get("/viewPharmacistsRequests", viewPharmacistsRequests);
 router.get("/searchMedicine", searchMedicine);
 router.get('/patientinfo',viewPatientInfo)
 
-router.get('/salesReport/:year/:month', filterSales);
+router.get('/salesReport/:year/:month', viewSales);
+router.get('/salesReport/:year/:month/:day', filterSalesByDay);
+router.get('/filterSalesReport/:year/:month/:name', filterSalesByName);
+
+
 
 //Hamouda Cart!
 router.post('/addMedicineToCart/:UserName/:name', addMedicineToCart);
