@@ -62,7 +62,7 @@ const getAllPharmacist= async(req, res) => {
         const pharmacist = await requestRegisterAsPharmacist.find()
         res.status(200).json({pharmacist})
     }catch(error){
-        res.status(400).json({message: 'cannot get all admins'})
+        res.status(400).json({message: 'cannot get all pharmacists'})
     }
 }
 

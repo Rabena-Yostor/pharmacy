@@ -81,4 +81,21 @@ const login = async (req, res) => {
 };
 
 
-module.exports={showMedicine,viewMedicineDetails,login};
+const getWalletPharma = async (req, res) => {
+  try {
+    const { UserName } = req.params;
+
+    const pharmacist = await Pharmacist.findOne({ UserName });
+
+    if (!pharmacist) {
+      return res.status(404).json({ message: 'Pharmacist not found' });
+    }
+
+    return res.status(200).json({ wallet: pharmacist.wallet });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error getting wallet' });
+  }
+};
+
+
+module.exports={showMedicine,viewMedicineDetails,login,getWalletPharma};

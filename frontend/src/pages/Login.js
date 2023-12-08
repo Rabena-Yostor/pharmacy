@@ -47,8 +47,18 @@ const Login = () => {
                   localStorage.setItem('userType', userType);
                   localStorage.setItem('username', username);
                   localStorage.setItem('password', password);
-                  
-                navigate('/landing');
+                  switch (userType) {
+                    case 'pharmacist':
+                        navigate('/pharmacist');
+                        break;
+                    case 'admin':
+                        navigate('/admin');
+                        break;
+                    default:
+                        navigate('/patient');
+                        break;
+                }
+                
             } else {
                 console.error(data.error);
             }

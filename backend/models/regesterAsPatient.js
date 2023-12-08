@@ -105,6 +105,11 @@ orders: [
         enum: ['Pending', 'Completed', 'Cancelled'],
         default: 'Pending',
       },
+      paymentMethod: {
+        type: String,
+        enum: ['Cash', 'Card', 'Wallet'],
+        default: 'Cash',
+      },
       
     },
   ],

@@ -22,9 +22,9 @@ const getMedicine = async(req,res)=>{
 
 // create a medicine
 const addMedicine = async (req, res) => {
-    const { name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales } = req.body
+    const { name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales,activeIngredient } = req.body
     try {
-        const medicine = await Medicine.create({ name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales})
+        const medicine = await Medicine.create({ name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales,activeIngredient})
         res.status(200).json(medicine)
     } catch (error) {
         res.status(400).json({ error: error.message })

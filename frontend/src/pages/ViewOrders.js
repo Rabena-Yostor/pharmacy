@@ -23,23 +23,32 @@ function ViewOrders() {
         fetchOrders();
     }, []);
 
-    const handleCancelOrder = async (orderId) => {
-        try {
-            const username = localStorage.getItem('username');// Replace with the actual username or get it dynamically
-            const response = await fetch(`http://localhost:4000/api/medicine/removeOrder/${username}/${orderId}`, {
-                method: 'DELETE',
-            });
+const handleCancelOrder = async (orderId) => {
+    try {
+        const username = localStorage.getItem('username');
+        const response = await fetch(`http://localhost:4000/api/medicine/removeOrder/${username}/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: 'Cancelled' }), // Send the new status
+        });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            // Remove the canceled order from the state
-            setOrders((prevOrders) => prevOrders.filter((order) => order._id !== orderId));
-        } catch (error) {
-            console.error('Error canceling order:', error);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    };
+
+        // Update the order status in the state
+        setOrders((prevOrders) =>
+            prevOrders.map((order) =>
+                order._id === orderId ? { ...order, status: 'Cancelled' } : order
+            )
+        );
+    } catch (error) {
+        console.error('Error canceling order:', error);
+    }
+};
+
 
     return (
         <div>

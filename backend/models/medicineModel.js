@@ -1,35 +1,33 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const medicineSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     manufacturer: {
         type: String,
-       
     },
     medicinalUse: {
         type: String,
-        
     },
     dosage: {
         type: String,
-       
     },
     details: {
         type: String,
-        required: true
+        required: true,
     },
-    imageUrl:{
+  
+    imageUrl: {
         type: String,
-       default: 'https://www.default.com'
-      },
+        default: 'https://www.default.com',
+    },
     price: {
         type: Number,
-        required: true
+        required: true,
     },
     quantity: {
         type: Number,
@@ -37,13 +35,19 @@ const medicineSchema = new Schema({
     },
     prescriptionRequired: {
         type: Boolean,
-    
     },
     sales: {
         type: Number,
-       
-    },    
+    },
+    archived: {
+        type: Boolean,
+        default: false
+    }  ,
+    activeIngredient: {
+        type: String, // Single active ingredient
+        required: true,
+    }, 
 
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model('Medicine', medicineSchema)
+module.exports = mongoose.model('Medicine', medicineSchema);

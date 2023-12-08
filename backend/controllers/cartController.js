@@ -26,7 +26,18 @@ const addMedicineToCart = async (req, res) => {
       return res.status(404).json({ message: 'Patient not found' });
     }
     if (medicine.quantity === 0) {
-      return res.status(400).json({ message: 'No quantity of the medicine available' });
+      // If not in stock, fetch alternatives
+      const alternatives = await Medicine.find({
+        activeIngredient: medicine.activeIngredient,
+        quantity: { $gt: 0 }, // Only include medicines that are in stock
+        _id: { $ne: medicine._id }, // Exclude the selected medicine itself
+      });
+
+      if (alternatives.length > 0) {
+        return res.status(200).json({ message: 'Medicine out of stock', alternatives });
+      } else {
+        return res.status(400).json({ message: 'Medicine out of stock,No alternatives available' });
+      }
     }
     if (medicine.prescriptionRequired === true) {
       return res.status(400).json({ message: 'Prescription required' });
@@ -286,6 +297,7 @@ const changeQuantityInCart = async (req, res) => {
         totalAmount: totalAmount,
         address: address,
         status: 'Pending',
+        paymentMethod: 'Wallet',
       };
       
       patient.orders.push(order);
@@ -320,6 +332,44 @@ const changeQuantityInCart = async (req, res) => {
         totalAmount: totalAmount,
         address: address,
         status: 'Pending',
+        paymentMethod: 'Cash',
+      };
+      
+      patient.orders.push(order);
+      console.log('Order:', patient.orders);
+      patient.cart.items = [];
+      patient.cart.totalAmount = 0;
+      patient.cart.address.street = '';
+      patient.cart.address.city = '';
+      patient.cart.address.state = '';
+      patient.cart.address.zipCode = '';
+      await patient.save();
+      return res.status(200).json({ message: 'Checked out successfully' });
+
+    }
+    catch(error){
+      return res.status(500).json({ message: 'Error checking out' });
+    }
+  }
+
+  const checkOutWithCard = async (req, res) => {
+    try{
+      const { UserName } = req.params;
+      
+    
+      const patient = await Patient.findOne({ UserName });
+      if (!patient) {
+        return res.status(404).json({ message: 'Patient not found' });
+      }
+      const cartItems = patient.cart.items;
+      const totalAmount = patient.cart.totalAmount;
+      const address = patient.cart.address;
+      const order = {
+        items: cartItems,
+        totalAmount: totalAmount,
+        address: address,
+        status: 'Pending',
+        paymentMethod: 'Card',
       };
       
       patient.orders.push(order);
@@ -375,13 +425,19 @@ const changeQuantityInCart = async (req, res) => {
         }
 
         // Remove the order from the orders array using splice
-        const removedOrder = patient.orders.splice(orderIndex, 1);
+        patient.orders[orderIndex].status = 'Cancelled';
+        if(patient.orders[orderIndex].paymentMethod === 'Wallet'){
+          patient.wallet += patient.orders[orderIndex].totalAmount;
+        }
+        if(patient.orders[orderIndex].paymentMethod === 'Card'){
+          patient.wallet += patient.orders[orderIndex].totalAmount;
+        }
 
         // Save the updated patient document
         await patient.save();
 
         // Return the removed order or a success message
-        return res.status(200).json({ message: 'Order removed successfully', removedOrder });
+        return res.status(200).json({ message: 'Order cancelled successfully' });
     } catch (error) {
         console.error('Error removing order:', error);
         return res.status(500).json({ message: 'Error removing order' });
@@ -403,4 +459,4 @@ const payment = async(req,res) => {
 }
 
 
-module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder, payment };
+module.exports = { addMedicineToCart, getCartItems, deleteMedicineFromCart, changeQuantityInCart, getAddresses,zeroAmount,checkOut,chooseAddress,payWithWallet, viewOrders,removeOrder, payment,checkOutWithCard };

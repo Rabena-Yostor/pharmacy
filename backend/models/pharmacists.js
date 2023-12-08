@@ -46,7 +46,10 @@ licenseFile: {
     data: Buffer,
     contentType: String,
 },
-
+wallet: {
+    type: Number,
+    default: 1000,
+},
 
 
 }, {timestamps: true})

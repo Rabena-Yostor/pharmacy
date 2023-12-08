@@ -20,7 +20,9 @@ import Completion from './components/Completion.js';
 import Login from './pages/Login';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword';
-
+import HomePagePatient from './pages/HomePagePatient';
+import HomePagePharma from './pages/HomePagePharma';
+import HomePageAdmin from './pages/HomePageAdmin';
 
 function App() {
   return (
@@ -50,6 +52,11 @@ function App() {
             <Route path = "/viewOrders" element = {<ViewOrders />} />
             <Route path = "/payment" element = {<Payment />} />
             <Route path = "/completion" element = {<Completion />} />
+            <Route path = "/patient" element = {<HomePagePatient />} />
+            <Route path = "/pharmacist" element = {<HomePagePharma />} />
+            <Route path = "/admin" element = {<HomePageAdmin />} />
+            
+
 
       
           </Routes>

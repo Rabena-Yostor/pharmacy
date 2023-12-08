@@ -7,6 +7,8 @@ function Store() {
   const [successMessage, setSuccessMessage] = useState('');
   const [walletBalance, setWalletBalance] = useState(0);
 
+  const [alternatives, setAlternatives] = useState([]); // Initialize alternatives state to an empty array
+
   useEffect(() => {
     // Fetch medicine details when the component mounts
     fetchMedicines();
@@ -54,24 +56,40 @@ function Store() {
 
       if (!response.ok) {
         const data = await response.json();
+        
         setErrorMessage(data.message); // Display the error message on the frontend
         setSuccessMessage(''); // Clear any existing success message
         return;
       }
       if(response.ok){
       const data = await response.json();
+      console.log('Message', data.message);
+      if (data.message === 'Medicine not in stock' && data.alternatives.length > 0){
+        setSuccessMessage('Medicine not in Stock. Choose an Alternative below');
+        setAlternatives(data.alternatives);
+        setErrorMessage(''); // Clear any existing error message
+        console.log('Alternatives:' , data.alternatives);
+        return;
+       
+      }
+      
       console.log('Added to Cart:', data);
       setErrorMessage(''); // Clear any existing error message
       setSuccessMessage('Medicine added to cart successfully');
-      
-      setTimeout(() => {
+      setAlternatives([]); // Clear alternatives in case there were any
+
+       setTimeout(() => {
         window.location.reload();
       }, 500);
+      
+     
       }
     } catch (error) {
       console.error('Error adding medicine to cart:', error);
       setErrorMessage('Something went wrong. Please try again.'); // Display a generic error message
       setSuccessMessage(''); // Clear any existing success message
+      setAlternatives([]); // Clear alternatives in case there were any
+
     }
   };
   const handleViewOrders = async () => {
@@ -94,6 +112,22 @@ function Store() {
       </ul>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
+
+      {/* Display alternatives if available */}
+    {alternatives.length > 0 && (
+      <div>
+        <p>Alternatives:</p>
+        <ul>
+          {alternatives.map((alternative) => (
+            <li key={alternative._id}>
+              {alternative.name} - {alternative.manufacturer} - {alternative.dosage} - {alternative.medicinalUse} - {alternative.price} EGP
+              <button onClick={() => addToCart(alternative.name)}>Add to Cart</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
     </div>
   );
 }
