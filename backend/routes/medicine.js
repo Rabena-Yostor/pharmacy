@@ -75,6 +75,13 @@ const{
     getAllNotifications
 } = require('../controllers/notificationsController');
 
+const{
+    getConversationPatient,
+    getConversationPharmacist,
+    sendMessagePharmacist,
+    getMessages,
+} = require('../controllers/conversationController')
+
 const pharma = require('../controllers/pharma');
 const patient = require('../controllers/patient');
 const admin = require('../controllers/admin');
@@ -117,6 +124,11 @@ router.post('/createNotification', createNotification);
 router.delete('/deleteNotification/:notificationId', deleteNotification);
 router.post('/getAllNotifications', getAllNotifications);
 
+//Conversations
+router.post('/getConversationPatient', getConversationPatient);
+router.post('/getConversationPharmacist', getConversationPharmacist);
+router.post('/sendMessagePharmacist', sendMessagePharmacist);
+router.post('/getMessages', getMessages);
 
 //login
 router.post('/admin/Login', login)

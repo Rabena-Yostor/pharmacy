@@ -49,6 +49,9 @@ function HomePage() {
       <Link to="/notifications">
         <button>Notifications</button>
       </Link>
+      <Link to="/conversation">
+        <button>Conversation</button>
+      </Link>
       <br />
       <hr />
       <Link to="/change-password">

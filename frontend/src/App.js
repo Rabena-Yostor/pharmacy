@@ -21,6 +21,7 @@ import Login from './pages/Login';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword';
 import NotificationPage from './pages/Notifications';
+import ConversationPage from './pages/Conversation.js';
 
 
 function App() {
@@ -50,8 +51,7 @@ function App() {
             <Route path = "/viewOrders" element = {<ViewOrders />} />
             <Route path = "/payment" element = {<Payment />} />
             <Route path = "/completion" element = {<Completion />} />
-
-      
+            <Route path = "/conversation" element = {<ConversationPage />} />      
           </Routes>
         </div>
       </BrowserRouter>
