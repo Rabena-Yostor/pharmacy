@@ -29,7 +29,7 @@ const addMedicineToCart = async (req, res) => {
       return res.status(404).json({ message: 'Patient not found' });
     }
     //Find a pharmacist with the UserName final.final
-    const pharmacist = await Pharmacist.findOne({ UserName: 'final.final' });
+    const pharmacist = await Pharmacist.findOne({ UserName: 'PeterPharmacistSP3' });
     if (medicine.quantity === 0) {
       //Send a notification to the pharmacist
       const notification = new Notification({

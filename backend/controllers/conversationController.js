@@ -1,4 +1,5 @@
 
+const { default: mongoose } = require('mongoose');
 const Conversation = require('../models/Convesation');
 const Message = require('../models/Messages');
 const Pharmacist = require('../models/pharmacists');
@@ -55,8 +56,9 @@ const getConversationPharmacist = async (req, res) => {
             return res.status(400).json({ message: 'Sender Name and receiver Name are required' });
         }
 
+        const doctors = mongoose.connection.collection('doctors');
         const pharmacist = await Pharmacist.findOne({ UserName: senderName });
-        const patient = await Patient.findOne({ UserName: receiverName });
+        const patient = await doctors.findOne({ username: receiverName });
 
 
         const conversation = await Conversation.findOne({ senderId: pharmacist._id, receiverId: patient._id });
@@ -93,6 +95,7 @@ const sendMessagePharmacist = async (req, res) => {
         const { conversationId, senderName, text } = req.body;
 
         const pharmacist = await Pharmacist.findOne({ UserName: senderName });
+
 
         // Validate required fields
         if (!conversationId || !senderName || !text) {
