@@ -3,7 +3,7 @@ const Medicine = require('../models/medicineModel.js');
 const Patient = require('../models/regesterAsPatient.js');
 const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
 // add an over the counter medicine to cart
-
+const mongoose = require('mongoose');
 const addMedicineToCart = async (req, res) => {
   try {
     const { UserName, name } = req.params;
@@ -40,7 +40,27 @@ const addMedicineToCart = async (req, res) => {
       }
     }
     if (medicine.prescriptionRequired === true) {
-      return res.status(400).json({ message: 'Prescription required' });
+      try {
+        const collection = mongoose.connection.collection('prescriptions');
+        const prescription = await collection.findOne({ patientUsername: UserName, 'medicines.name': name });
+        console.log('Prescription:', prescription);
+    
+        if (!prescription) {
+          return res.status(400).json({ message: 'Prescription required' });
+        }
+    
+        if (prescription.filled === true) {
+          return res.status(400).json({ message: 'Prescription already filled' });
+        }
+    
+       
+    
+  
+    
+      } catch (error) {
+        console.error('Error checking and updating prescription:', error);
+        return res.status(500).json({ message: 'Error checking and updating prescription' });
+      }
     }
     if (medicine.quantity > 0) {
           medicine.quantity -= 1;
@@ -93,6 +113,7 @@ const addMedicineToCart = async (req, res) => {
   }
 
 }
+
 
 const getCartItems = async (req, res) => {
   try {
