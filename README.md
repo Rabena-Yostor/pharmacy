@@ -1,7 +1,3 @@
-Certainly! Here's an improved version of your README.md file with better formatting and organization:
-
----
-
 # El7a2ny Pharmacy System
 
 ## Introduction
@@ -159,9 +155,9 @@ We would like to extend our thanks to the following individuals for their contri
 
 - Hana Elmoatasem
 - Peter Ashraf
+- Ahmed Hamouda
 - Khaled Magdy
 - Malak Wael
-- Ahmed Hamouda
 - Peter Youssef
 - Mohamed Ahmed
 - Hazem Nasser
