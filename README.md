@@ -93,7 +93,10 @@ Frontend `app.js` example:
 
 ```env
 PORT=4000
-MONGO_URI='your_mongo_db_uri_here'
+MONGO_URI = 'mongodb+srv://ahmedhamouda776:ACL123@rabenayostor.5zgv8bz.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp'
+STRIPE_PUBLISHABLE_KEY="pk_test_51O4R2WJ6reglJIMrbT7RTKyuwYmIFnSp0hbD9CKUiQJp7uw0ZoV6ClIimQ1CnkIXxf8mxYEHE4ouO2vWRCTcnw7t00p5tUfsb3"
+STRIPE_SECRET_KEY="sk_test_51O4R2WJ6reglJIMrC5OBVfvk5frEdn3RLdV51Z9HrEFMyY9jJPIaSw4yrGX1XZMwu2FP5Dl9AZ5ep5gP9TYBi0oP00zMiFnOTc"
+
 ```
 
 3. Open a new terminal.
