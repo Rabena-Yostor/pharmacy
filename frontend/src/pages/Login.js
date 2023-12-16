@@ -12,60 +12,65 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        try {
-
-            if (userType === 'pharmacist') {
-                var response = await fetch('/api/medicine/Pharmacist/Login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ UserName: username, Password: password }),
-                });
-            } else if (userType === 'admin') {
-                var response = await fetch('/api/medicine/admin/Login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ AdminUserName: username, AdminPassword: password }),
-                });
-            }else{
-                var response = await fetch('/api/medicine/Patient/Login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ UserName: username, Password: password }),
-                });
-            }
-            const data = await response.json();
-
-            if (response.status === 200) {
-                
-                  localStorage.setItem('userType', userType);
-                  localStorage.setItem('username', username);
-                  localStorage.setItem('password', password);
-                  switch (userType) {
-                    case 'pharmacist':
-                        navigate('/pharmacist');
-                        break;
-                    case 'admin':
-                        navigate('/admin');
-                        break;
-                    default:
-                        navigate('/patient');
-                        break;
+    
+        const userEndpoints = [
+            { type: 'pharmacist', endpoint: '/api/medicine/Pharmacist/login' },
+            { type: 'admin', endpoint: '/api/medicine/admin/login' },
+            { type: 'Patient', endpoint: '/api/medicine/Patient/login' }
+        ];
+        const credentials = JSON.stringify({ username, password });
+    
+        for (const { type, endpoint } of userEndpoints) {
+            try {
+                var response = '';
+                if(type === 'pharmacist'){
+                    var response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ UserName: username, Password: password }),
+                    });
+                }else if(type === 'admin'){
+                    var response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ AdminUserName: username, AdminPassword: password }),
+                    });
+                }else {
+                    var response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ UserName: username, Password: password }),
+                    });
                 }
-                
-            } else {
-                console.error(data.error);
+    
+                if (response.status === 200) {
+                    const data = await response.json();
+                    localStorage.setItem('userType', type);
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('password', password);
+    
+                    switch (type) {
+                        case 'pharmacist':
+                            navigate('/pharmacist');
+                            return;
+                        case 'admin':
+                            navigate('/admin');
+                            return;
+                        case 'Patient':
+                            navigate('/patient');
+                            return;
+                        default:
+                            break;
+                    }
+                }
+            } catch (error) {
+                console.error('Error during login:', error.message);
             }
-        } catch (error) {
-            console.error(error.message);
         }
+    
+        console.error('Invalid username or password');
     };
+
     const handleResetPassword = () => {
         // Navigate to the reset-password path
         navigate('/reset-password');
@@ -84,15 +89,6 @@ const Login = () => {
         <div>
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
-                <label>
-                    User Type:
-                    <select value={userType} onChange={(e) => setUserType(e.target.value)}>
-                        <option value="pharmacist">Pharmacist</option>
-                        <option value="admin">Admin</option>
-                        <option value="Patient">Patient</option> 
-                    </select>
-                </label>
-                <br />
                 <label>
                     Username:
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
