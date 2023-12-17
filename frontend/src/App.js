@@ -29,7 +29,8 @@ import ViewSalesReport from './pages/viewSalesReport';
 import FilterPatient from './pages/FilterPatient';
 import ViewSalesReportAdmin from './pages/viewSalesReportAdmin';
 import MedicineSearch from './pages/MedicineSearch';
-
+import ConversationPagePatient from './pages/PatientConversations.js';
+import DoctorConversation from './pages/DoctorConversation.js';
 function App() {
   return (
     <div className="App">
@@ -68,7 +69,8 @@ function App() {
 
             <Route path="/filter-patient" element={<FilterPatient />} />
             <Route path="/viewSalesReportAdmin" element={<ViewSalesReportAdmin />} />
-      
+            <Route path="/patientConv" element={<ConversationPagePatient />} />
+            <Route path="/doctorConv" element={<DoctorConversation />} />
           </Routes>
         </div>
       </BrowserRouter>

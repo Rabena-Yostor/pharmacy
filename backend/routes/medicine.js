@@ -86,8 +86,9 @@ const{
     getConversationPharmacist,
     sendMessagePharmacist,
     getMessages,
+    sendMessagePatient,
+    getConversationPharmacistForDoctor
 } = require('../controllers/conversationController')
-
 const pharma = require('../controllers/pharma');
 const patient = require('../controllers/patient');
 const admin = require('../controllers/admin');
@@ -135,7 +136,8 @@ router.post('/getConversationPatient', getConversationPatient);
 router.post('/getConversationPharmacist', getConversationPharmacist);
 router.post('/sendMessagePharmacist', sendMessagePharmacist);
 router.post('/getMessages', getMessages);
-
+router.post('/sendMessagesPatient',sendMessagePatient);
+router.post('/getConversationPharmacistForDoctor', getConversationPharmacistForDoctor);
 //login
 router.post('/admin/Login', login)
 
