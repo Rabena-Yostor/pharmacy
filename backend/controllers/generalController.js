@@ -18,7 +18,7 @@ const sales = require ('../models/sales.js');
 // }
 
 const searchMedicine = async (req, res) => {
-    const  Name  = req.query
+    const  Name  = req.query.query
     try {
         const medicine = await Medicine.findOne({ name: Name });
         if (medicine == null){

@@ -52,8 +52,11 @@ function HomePagePharma() {
       <Link to="/hamouda">
         <button>Filter Medicines</button>
       </Link>
-      <Link to="/hana">
+      <Link to="/view-medicines">
         <button>View All Medicines</button>
+      </Link>
+      <Link to="/filter-medicines">
+        <button>View Medicines' Sales Quantity</button>
       </Link>
       <Link to="/hazem2">
         <button>Add Admin</button>
