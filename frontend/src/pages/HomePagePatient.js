@@ -31,12 +31,20 @@ function HomePagePatient() {
       <Link to="/view-medicines">
         <button>View All Medicines</button>
       </Link>
- 
-      <Link to="/khaled">
-        <button>Medicine Search</button>
+      <Link to="/hazem2">
+        <button>Add Admin</button>
       </Link>
-      <Link to="/khaledRequests">
-        <button>View Pharmacists' Requests</button>
+      <Link to="/hazem1">
+        <button>Add Pharmacist</button>
+      </Link>
+      <Link to="/hazem3">
+        <button>Register Patient</button>
+      </Link>
+      <Link to="/malak">
+        <button>View Patient's Basic Info</button>
+      </Link>
+      <Link to="/khaled">
+        <button>search and view (khaled)</button>
       </Link>
       
       <br />

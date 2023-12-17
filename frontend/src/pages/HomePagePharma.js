@@ -67,10 +67,13 @@ function HomePagePharma() {
         <button>Notifications</button>
       </Link>
       <Link to="/conversation">
-        <button>Conversation</button>
+        <button>Conversation with Patient</button>
       </Link>
       <Link to="/viewSalesReport">
         <button>View Sales Report</button>
+      </Link>
+      <Link to="/doctorConv">
+        <button>Conversation with Doctor</button>
       </Link>
       <br />
       <hr />

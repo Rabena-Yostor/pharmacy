@@ -26,9 +26,7 @@ import HomePagePatient from './pages/HomePagePatient';
 import HomePagePharma from './pages/HomePagePharma';
 import HomePageAdmin from './pages/HomePageAdmin';
 import ViewSalesReport from './pages/viewSalesReport';
-import FilterPatient from './pages/FilterPatient';
-import ViewSalesReportAdmin from './pages/viewSalesReportAdmin';
-import MedicineSearch from './pages/MedicineSearch';
+import ConversationPagePatient from './pages/PatientConversations.js';
 
 function App() {
   return (
@@ -49,8 +47,7 @@ function App() {
             <Route path="/hazem2" element={<AddAdmin />} />
             <Route path="/hazem3" element={<RegiesteAsPatient />} />
             <Route path="/malak" element={<ViewPatientInfo />} />
-            <Route path="/khaled" element={<div><MedicineSearch /></div>} />
-            <Route path="/khaledRequests" element={<div>< KhaledHome/></div>} />
+            <Route path="/khaled" element={<div><KhaledHome /></div>} />
 
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/notifications" element={<NotificationPage />} />
@@ -65,9 +62,9 @@ function App() {
             <Route path = "/pharmacist" element = {<HomePagePharma />} />
             <Route path = "/admin" element = {<HomePageAdmin />} />
             <Route path="/viewSalesReport" element={<ViewSalesReport />} />
+            <Route path="/patientConv" element={<ConversationPagePatient />} />
+            
 
-            <Route path="/filter-patient" element={<FilterPatient />} />
-            <Route path="/viewSalesReportAdmin" element={<ViewSalesReportAdmin />} />
       
           </Routes>
         </div>
