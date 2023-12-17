@@ -46,7 +46,7 @@ function App() {
             <Route path="/hazem2" element={<AddAdmin />} />
             <Route path="/hazem3" element={<RegiesteAsPatient />} />
             <Route path="/malak" element={<ViewPatientInfo />} />
-            <Route path="/khaled" element={<div><KhaledHome /><SearchBar /></div>} />
+            <Route path="/khaled" element={<div><KhaledHome /></div>} />
 
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/notifications" element={<NotificationPage />} />
