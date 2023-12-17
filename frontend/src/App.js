@@ -33,7 +33,8 @@ import ConversationPagePatient from './pages/PatientConversations.js';
 import DoctorConversation from './pages/DoctorConversation.js';
 function App() {
   return (
-    <div className="App">
+    <div className="container">
+    <div className="content">
       <BrowserRouter>
       {/* <SearchBar /> */}
         <Navbar />
@@ -75,6 +76,7 @@ function App() {
         </div>
       </BrowserRouter>
     </div>
+  </div>
   );
 }
 
