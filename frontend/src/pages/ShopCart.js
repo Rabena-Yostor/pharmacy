@@ -64,7 +64,7 @@ function Store() {
       if(response.ok){
       const data = await response.json();
       console.log('Message', data.message);
-      if (data.message === 'Medicine not in stock' && data.alternatives.length > 0){
+      if (data.message === 'Medicine out of stock' && data.alternatives.length > 0){
         setSuccessMessage('Medicine not in Stock. Choose an Alternative below');
         setAlternatives(data.alternatives);
         setErrorMessage(''); // Clear any existing error message

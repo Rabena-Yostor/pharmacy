@@ -46,6 +46,7 @@ function HomePagePatient() {
       <Link to="/khaled">
         <button>search and view (khaled)</button>
       </Link>
+      
       <br />
       <hr />
       <Link to="/change-password">

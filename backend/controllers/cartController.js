@@ -2,6 +2,11 @@
 const Medicine = require('../models/medicineModel.js');
 const Patient = require('../models/regesterAsPatient.js');
 const stripe = require('stripe')('sk_test_51OBhDrEzQFPCGYEsYaRwv85P6TlemKbk8trn953Tn9r4uduOkQ57a7UVTL53Qvt9ddEOOSO6wNHF9f9lskPKaZVv00Ihj83X1R');
+const Pharmacist = require('../models/pharmacists.js');
+const Notification = require('../models/notificationModel.js');
+const nodemailer = require('nodemailer');
+
+
 // add an over the counter medicine to cart
 const mongoose = require('mongoose');
 const addMedicineToCart = async (req, res) => {
@@ -10,8 +15,9 @@ const addMedicineToCart = async (req, res) => {
     console.log('Params:', UserName, name);
 
     const medicine = await Medicine.findOne({ name });
-    console.log('Medicine:', medicine);
 
+    console.log('Medicine:', medicine);
+    console.log ('Medicine Quanitty:', medicine.quantity  );
     if (!medicine) {
       return res.status(404).json({ message: 'Medicine not found' });
     }
@@ -25,7 +31,45 @@ const addMedicineToCart = async (req, res) => {
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
+
+
+
+    //Find a pharmacist with the UserName final.final
+    const pharmacist = await Pharmacist.findOne({ UserName: 'PeterPharmacistSP3' });
     if (medicine.quantity === 0) {
+
+      //Send a notification to the pharmacist
+      const notification = new Notification({
+        recipient_id: pharmacist._id,
+        message: `The medicine ${medicine.name} is out of stock`,
+        timestamp: Date.now(),
+      });
+      await notification.save();
+      // Send OTP to the user's email
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'peteraclsender@gmail.com',
+          pass: 'tayr rzwl yvip tqjt',
+        },
+      });
+      const mailOptions = {
+        from: 'peteraclsender@gmail.com',
+        to: pharmacist.Email,
+        subject: 'Out of stock notification',
+        text: `The medicine ${medicine.name} is out of stock`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(500).json({ error: 'Error sending OTP via email' });
+        }
+        res.status(200).json({ message: 'OTP sent successfully' });
+      });
+ 
+
+
+      console.log('Medicine out of stock');
       // If not in stock, fetch alternatives
       const alternatives = await Medicine.find({
         activeIngredient: medicine.activeIngredient,

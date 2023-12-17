@@ -29,7 +29,7 @@ const Navbar = () => {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>Rabena Yostor Clinic</h1>
+          <h1>Rabena Yostor Pharmacy</h1>
         </Link>
         <button className="btn btn-primary" onClick={handleLogout}>
           Log Out

@@ -46,6 +46,12 @@ function HomePage() {
       <Link to="/khaled">
         <button>search and view (khaled)</button>
       </Link>
+      <Link to="/notifications">
+        <button>Notifications</button>
+      </Link>
+      <Link to="/conversation">
+        <button>Conversation</button>
+      </Link>
       <br />
       <hr />
       <Link to="/change-password">
