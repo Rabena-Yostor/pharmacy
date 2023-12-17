@@ -44,7 +44,10 @@ function HomePage() {
         <button>View Patient's Basic Info</button>
       </Link>
       <Link to="/khaled">
-        <button>search and view (khaled)</button>
+        <button>Medicine Search</button>
+      </Link>
+      <Link to="/khaledRequests">
+        <button>View Pharmacists Requests</button>
       </Link>
       
       <br />

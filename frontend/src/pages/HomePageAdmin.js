@@ -19,34 +19,28 @@ function HomePageAdmin() {
       <h2>{type} {username}</h2>
       <br />
       <hr />
-      <Link to="/peter">
-        <button>Add and Edit Medicines</button>
-      </Link>
-      <Link to="/shop">
-        <button>Shop</button>
-      </Link>
-      <Link to="/hamouda">
+    
+      
+      <Link to="/filter-patient">
         <button>Filter Medicines</button>
       </Link>
       <Link to="/view-medicines">
         <button>View All Medicines</button>
       </Link>
+      <Link to="/khaled">
+        <button>Medicine Search</button>
+      </Link>
       <Link to="/hazem2">
         <button>Add Admin</button>
       </Link>
-      <Link to="/hazem1">
-        <button>Add Pharmacist</button>
-      </Link>
-      <Link to="/hazem3">
-        <button>Register Patient</button>
+      <Link to="/khaledRequests">
+        <button>View Pharmacists Requests</button>
       </Link>
       <Link to="/malak">
         <button>View Patient's Basic Info</button>
       </Link>
-      <Link to="/khaled">
-        <button>search and view (khaled)</button>
-      </Link>
-      <Link to="/viewSalesReport">
+    
+      <Link to="/viewSalesReportAdmin">
         <button>View Sales Report</button>
       </Link>
       <br />

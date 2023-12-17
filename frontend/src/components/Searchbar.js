@@ -17,19 +17,21 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="search-bar">
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+      <h1>Search for medicine by name</h1>
       <div>
-  {searchResults.map((result) => (
-    <div key={result._id}>Name: {result.name}, Medicinal Use: {result.medicinalUse}</div>
-  ))}
-</div>
-
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
+      </div>
+      <div>
+        {searchResults.map((result) => (
+          <div key={result._id}>Name: {result.name}, Medicinal Use: {result.medicinalUse}</div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Filter() {
+function FilterPatient() {
     console.log('Hiii')
   const [medicines, setMedicines] = useState([]);
   const [filteredMedicines, setFilteredMedicines] = useState([]);
@@ -100,7 +100,7 @@ function Filter() {
             ))
           : medicines.map((medicine) => (
               <li key={medicine._id}>
-                {medicine.name} - {medicine.manufacturer} - {medicine.dosage} - {medicine.medicinalUse}     {medicine.archived === false && <button onClick={() => {archive(medicine._id); window.location.reload();}}>Archive</button>} {medicine.archived === true && <button onClick={() => {unarchive(medicine._id); window.location.reload();}}>Unarchive</button>}
+                {medicine.name} - {medicine.manufacturer} - {medicine.dosage} - {medicine.medicinalUse}     
               </li>
             ))}
       </ul>
@@ -108,4 +108,4 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default FilterPatient;

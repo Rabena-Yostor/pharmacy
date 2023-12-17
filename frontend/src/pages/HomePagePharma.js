@@ -50,7 +50,7 @@ function HomePagePharma() {
         <button>Shop</button>
       </Link>
       <Link to="/hamouda">
-        <button>Filter Medicines</button>
+        <button>Filter & Archive Medicines</button>
       </Link>
       <Link to="/view-medicines">
         <button>View All Medicines</button>
@@ -58,21 +58,11 @@ function HomePagePharma() {
       <Link to="/filter-medicines">
         <button>View Medicines' Sales Quantity</button>
       </Link>
-      <Link to="/hazem2">
-        <button>Add Admin</button>
-      </Link>
-      <Link to="/hazem1">
-        <button>Add Pharmacist</button>
-      </Link>
-      <Link to="/hazem3">
-        <button>Register Patient</button>
-      </Link>
-      <Link to="/malak">
-        <button>View Patient's Basic Info</button>
-      </Link>
+    
       <Link to="/khaled">
-        <button>search and view (khaled)</button>
+        <button>Medicine Search</button>
       </Link>
+    
       <Link to="/notifications">
         <button>Notifications</button>
       </Link>

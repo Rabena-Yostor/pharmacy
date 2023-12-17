@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import SearchBar from '../components/Searchbar';
 
 const KhaledHome = () => {
     const [requests, setRequests] = useState(null);
@@ -40,7 +39,6 @@ const KhaledHome = () => {
     };
     return (
         <div className="home">
-         <SearchBar />
             <div className="requests">
                 {requests && requests.map((request) => (
                     <div key={request._id}>
