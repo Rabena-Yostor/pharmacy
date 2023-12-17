@@ -98,8 +98,8 @@ function Store() {
   return (
     <div>
       <h1>Medicine Store</h1>
-      <p style={{ position: 'absolute', top: 100, right: 900 }}>Wallet Balance: {walletBalance} EGP</p>
-      <button style = {{position: 'absolute', top: 115, right: 600}} onClick={handleViewOrders}>View Orders</button> 
+      <p style={{ position: 'absolute', top: 200, right: 300 }}>Wallet Balance: {walletBalance} EGP</p>
+      <button style = {{position: 'absolute', top: 200, right: 10}} onClick={handleViewOrders}>View Orders</button> 
 
       <CartIcon />
       <ul>

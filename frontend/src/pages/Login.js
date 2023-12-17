@@ -88,7 +88,7 @@ const Login = () => {
     return (
         <div>
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} style = {{marginBottom: '150px'}}>
                 <label>
                     Username:
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -102,8 +102,8 @@ const Login = () => {
                 <button type="submit">Login</button>
                 
             </form>
-            <button onClick={handleResetPassword}>Reset Password</button>
-            <button onClick={handleRegisterAsPharmacist}>Register as Pharmacist</button>
+            <button onClick={handleResetPassword} style = {{marginBottom: '10px'}}>Reset Password</button>
+            <button onClick={handleRegisterAsPharmacist } style = {{marginBottom: '10px', marginLeft: '60px'}}>Register as Pharmacist</button>
             <button onClick={handleRegisterAsPatient}>Register as Patient</button>
         </div>
     );
