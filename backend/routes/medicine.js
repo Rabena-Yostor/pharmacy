@@ -6,7 +6,10 @@ const{
     addMedicine,
     deleteMedicine,
     updateMedicine,
-    filterMedicine
+    filterMedicine,
+    getAllMedicinesPharmacist,
+    archiveMedicine,
+    unarchiveMedicine
 } = require('../controllers/medicineController')
 
 const {
@@ -50,7 +53,10 @@ const{
 } = require('../controllers/adminController')
 
 const {
-    searchMedicine
+    searchMedicine,
+    viewSales,
+    filterSalesByDay,
+    filterSalesByName
 } = require('../controllers/generalController')
 
 const {
@@ -88,6 +94,7 @@ const admin = require('../controllers/admin');
 const router = express.Router()
 
 router.get('/getAllMedicines',getAllMedicines)
+router.get('/getAllMedicinesPharmacist',getAllMedicinesPharmacist)
 
 router.get('/getMedicine/:id', getMedicine)
 
@@ -169,7 +176,12 @@ router.post('/PatientsendOtpAndSetPassword', PatientsendOtpAndSetPassword)
 router.post('/PharmacisttsendOtpAndSetPassword', PharmacisttsendOtpAndSetPassword)
 
 
-
+	
+router.post('/archiveMedicine/:id', archiveMedicine)
+router.post('/unarchiveMedicine/:id', unarchiveMedicine)
+router.get('/salesReport/:year/:month', viewSales);
+router.get('/salesReport/:year/:month/:day', filterSalesByDay);
+router.get('/filterSalesReport/:year/:month/:name', filterSalesByName);
 
 //get all pharmacist
 router.get('/getPharmacist',getAllPharmacist)

@@ -2,9 +2,44 @@ const { mongo, default: mongoose } = require('mongoose')
 const Medicine = require('../models/medicineModel')
 
 // get all patients
-const getAllMedicines = async(req,res)=>{
-    const medicines = await Medicine.find({})
-    res.status(200).json(medicines)
+const getAllMedicines = async (req, res) => {
+    try {
+        const medicines = await Medicine.find({ archived: false });
+        res.status(200).json(medicines);
+    } catch (error) {
+        // Handle error
+        console.error('Error fetching medicines:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const getAllMedicinesPharmacist = async (req, res) => {
+    try {
+        const medicines = await Medicine.find({});
+        res.status(200).json(medicines);
+    } catch (error) {
+        // Handle error
+        console.error('Error fetching medicines:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const archiveMedicine = async(req,res)=>{
+    const {id} = req.params
+    const medicine = await Medicine.findOneAndUpdate({_id: id}, {archived: true})
+    if(!medicine){
+        return res.status(400).json({ error: 'No such Medicine' })
+    }
+    res.status(200).json(medicine)
+}
+
+const unarchiveMedicine = async(req,res)=>{
+    const {id} = req.params
+    const medicine = await Medicine.findOneAndUpdate({_id: id}, {archived: false})
+    if(!medicine){
+        return res.status(400).json({ error: 'No such Medicine' })
+    }
+    res.status(200).json(medicine)
 }
 
 // get a specific patient(Search for one)
@@ -22,9 +57,9 @@ const getMedicine = async(req,res)=>{
 
 // create a medicine
 const addMedicine = async (req, res) => {
-    const { name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales,activeIngredient } = req.body
+    const { name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales } = req.body
     try {
-        const medicine = await Medicine.create({ name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales,activeIngredient})
+        const medicine = await Medicine.create({ name, manufacturer,medicinalUse,dosage,details,imageURL,price,quantity,prescriptionRequired,sales})
         res.status(200).json(medicine)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -92,5 +127,8 @@ module.exports = {
     addMedicine,
     deleteMedicine,
     updateMedicine,
-    filterMedicine
+    filterMedicine,
+    archiveMedicine,
+    unarchiveMedicine,
+    getAllMedicinesPharmacist
 }

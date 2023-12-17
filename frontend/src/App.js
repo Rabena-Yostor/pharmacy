@@ -25,6 +25,7 @@ import ConversationPage from './pages/Conversation.js';
 import HomePagePatient from './pages/HomePagePatient';
 import HomePagePharma from './pages/HomePagePharma';
 import HomePageAdmin from './pages/HomePageAdmin';
+import ViewSalesReport from './pages/viewSalesReport';
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
             <Route path = "/patient" element = {<HomePagePatient />} />
             <Route path = "/pharmacist" element = {<HomePagePharma />} />
             <Route path = "/admin" element = {<HomePageAdmin />} />
-            
+            <Route path="/viewSalesReport" element={<ViewSalesReport />} />
 
 
       

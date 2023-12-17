@@ -76,6 +76,9 @@ function HomePagePharma() {
       <Link to="/conversation">
         <button>Conversation</button>
       </Link>
+      <Link to="/viewSalesReport">
+        <button>View Sales Report</button>
+      </Link>
       <br />
       <hr />
       <Link to="/change-password">
