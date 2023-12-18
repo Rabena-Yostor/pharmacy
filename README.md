@@ -584,169 +584,217 @@ STRIPE_SECRET_KEY="sk_test_51O4R2WJ6reglJIMrC5OBVfvk5frEdn3RLdV51Z9HrEFMyY9jJPIa
 
 ## API References
 
-(All method names are the same as their Functionality)
+### Medicines
 
-Endpoint
-/api/medicine/’method name,
-Medicines
-Get all medicines
-•	GET /getAllMedicines
-•	Get a list of all medicines.
-Get a specific medicine
-•	GET /getMedicine/:id
-•	Get information about a specific medicine by its ID.
-Add a new medicine
-•	POST /addMedicine
-•	Add a new medicine to the database.
-Delete a medicine
-•	DELETE /deleteMedicine/:id
-•	Delete a medicine from the database by its ID.
-Update a medicine
-•	PATCH /updateMedicine/:id
-•	Update the information of a specific medicine by its ID.
-Filter medicines
-•	GET /filterMedicine
-•	Filter and retrieve medicines based on specific criteria.
-Users
-Create a new patient
-•	POST /createPatient
-•	Register a new patient.
-Create a new pharmacist
-•	POST /createPharmacist
-•	Register a new pharmacist.
-Create a new admin
-•	POST /admin
-•	Register a new admin.
-Get all patients
-•	GET /getAllPatients
-•	Get a list of all registered patients.
-Get all admins
-•	GET /getAllAdmins
-•	Get a list of all registered admins.
-Admin login
-•	POST /admin/Login
-•	Log in as an admin.
-Admin sign up
-•	POST /adminSignUp
-•	Sign up as an admin.
-Patient login
-•	POST /Patient/Login
-•	Log in as a patient.
-Patient sign up
-•	POST /PatientSignUp
-•	Sign up as a patient.
-Cart
-Add medicine to cart
-•	POST /addMedicineToCart/:UserName/:name
-•	Add a medicine to the user's cart.
-Get cart items
-•	GET /getCartItems/:UserName
-•	Retrieve the items in the user's cart.
-Delete medicine from cart
-•	DELETE /deleteMedicineFromCart/:UserName/:name
-•	Remove a medicine from the user's cart.
-Change quantity in cart
-•	PUT /changeQuantityInCart/:UserName/:name/:newQuantity
-•	Change the quantity of a medicine in the user's cart.
-Add address
-•	POST /addAddress/:UserName
-•	Add a new address for the user.
-Get addresses
-•	GET /getAddresses/:UserName
-•	Retrieve the user's addresses.
-Zero cart amount
-•	PUT /zeroAmount/:UserName
-•	Set the cart total amount to zero.
-Checkout
-•	PUT /checkOut/:UserName
-•	Process the checkout for the user's cart.
-Choose address for order
-•	PUT /chooseAddress/:UserName
-•	Select an address for the order.
-Pay with wallet
-•	PUT /payWithWallet/:UserName
-•	Pay for an order using the user's wallet balance.
-View orders
-•	GET /viewOrders/:UserName
-•	Retrieve the user's order history.
-View pharmacist request
-•	GET /viewPharmacistRequest
-•	View pending pharmacist registration requests.
-View pharmacists' requests
-•	GET /viewPharmacistsRequests
-•	View a list of all pharmacist registration requests.
-Search for a medicine
-•	GET /searchMedicine
-•	Search for medicines based on specific criteria.
-View patient information
-•	GET /patientinfo
-•	View detailed information about a patient.
-Reject pharmacist request
-•	DELETE /rejectPharmacistRequest/:UserName
-•	Reject a pending pharmacist registration request by their username.
-Accept pharmacist request
-•	POST /acceptPharmacistRequest/:UserName
-•	Accept a pending pharmacist registration request by their username.
-Get wallet balance
-•	GET /getWallet/:UserName
-•	Retrieve the wallet balance of a user.
-Pay with wallet balance
-•	PUT /payWithWallet/:UserName
-•	Make a payment using the user's wallet balance.
-View order history
-•	GET /viewOrders/:UserName
-•	Retrieve the order history for a user.
-Remove order
-•	DELETE /removeOrder/:UserName/:orderId
-•	Remove a specific order from a user's order history.
-Process payment
-•	POST /payment
-•	Process a payment for an order.
+**Get all medicines**
+- GET /getAllMedicines
+- Get a list of all medicines.
 
-Notifications
-Create a new notification
-•	POST /createNotification
-•	Create a new notification.
-Delete a notification
-•	DELETE /deleteNotification/:notificationId
-•	Delete a specific notification by its notification ID.
-Get all notifications
-•	POST /getAllNotifications
-•	Retrieve all notifications.
-Conversations
-Get conversation with a patient
-•	POST /getConversationPatient
-•	Retrieve the conversation between a pharmacist and a patient.
-Get conversation with a pharmacist
-•	POST /getConversationPharmacist
-•	Retrieve the conversation between a patient and a pharmacist.
-Send a message to a pharmacist
-•	POST /sendMessagePharmacist
-•	Send a message to a pharmacist as part of a conversation.
-Get messages
-•	POST /getMessages
-•	Retrieve messages from a conversation.
+**Get a specific medicine**
+- GET /getMedicine/:id
+- Get information about a specific medicine by its ID.
 
-Checkout with Card
-Checkout with a card
-•	PUT /checkOutWithCard/:UserName
-•	Perform a checkout with a card payment for the user.
-Pharmacist Wallet
-Get pharmacist's wallet balance
-•	GET /getWalletPharma/:UserName
-•	Retrieve the wallet balance of a pharmacist.
+**Add a new medicine**
+- POST /addMedicine
+- Add a new medicine to the database.
 
-Sales Reports
-View sales report for a specific year and month
-•	GET /salesReport/:year/:month
-•	Retrieve a sales report for a specific year and month.
-Filter sales report by day for a specific year, month, and day
-•	GET /salesReport/:year/:month/:day
-•	Filter and retrieve sales data for a specific year, month, and day.
-Filter sales report by medicine name for a specific year and month
-•	GET /filterSalesReport/:year/:month/:name
-•	Filter and retrieve sales data for a specific year, month, and medicine name.
+**Delete a medicine**
+- DELETE /deleteMedicine/:id
+- Delete a medicine from the database by its ID.
 
+**Update a medicine**
+- PATCH /updateMedicine/:id
+- Update the information of a specific medicine by its ID.
+
+**Filter medicines**
+- GET /filterMedicine
+- Filter and retrieve medicines based on specific criteria.
+
+### Users
+
+**Create a new patient**
+- POST /createPatient
+- Register a new patient.
+
+**Create a new pharmacist**
+- POST /createPharmacist
+- Register a new pharmacist.
+
+**Create a new admin**
+- POST /admin
+- Register a new admin.
+
+**Get all patients**
+- GET /getAllPatients
+- Get a list of all registered patients.
+
+**Get all admins**
+- GET /getAllAdmins
+- Get a list of all registered admins.
+
+**Admin login**
+- POST /admin/Login
+- Log in as an admin.
+
+**Admin sign up**
+- POST /adminSignUp
+- Sign up as an admin.
+
+**Patient login**
+- POST /Patient/Login
+- Log in as a patient.
+
+**Patient sign up**
+- POST /PatientSignUp
+- Sign up as a patient.
+
+### Cart
+
+**Add medicine to cart**
+- POST /addMedicineToCart/:UserName/:name
+- Add a medicine to the user's cart.
+
+**Get cart items**
+- GET /getCartItems/:UserName
+- Retrieve the items in the user's cart.
+
+**Delete medicine from cart**
+- DELETE /deleteMedicineFromCart/:UserName/:name
+- Remove a medicine from the user's cart.
+
+**Change quantity in cart**
+- PUT /changeQuantityInCart/:UserName/:name/:newQuantity
+- Change the quantity of a medicine in the user's cart.
+
+**Add address**
+- POST /addAddress/:UserName
+- Add a new address for the user.
+
+**Get addresses**
+- GET /getAddresses/:UserName
+- Retrieve the user's addresses.
+
+**Zero cart amount**
+- PUT /zeroAmount/:UserName
+- Set the cart total amount to zero.
+
+**Checkout**
+- PUT /checkOut/:UserName
+- Process the checkout for the user's cart.
+
+**Choose address for order**
+- PUT /chooseAddress/:UserName
+- Select an address for the order.
+
+**Pay with wallet**
+- PUT /payWithWallet/:UserName
+- Pay for an order using the user's wallet balance.
+
+**View orders**
+- GET /viewOrders/:UserName
+- Retrieve the user's order history.
+
+**View pharmacist request**
+- GET /viewPharmacistRequest
+- View pending pharmacist registration requests.
+
+**View pharmacists' requests**
+- GET /viewPharmacistsRequests
+- View a list of all pharmacist registration requests.
+
+**Search for a medicine**
+- GET /searchMedicine
+- Search for medicines based on specific criteria.
+
+**View patient information**
+- GET /patientinfo
+- View detailed information about a patient.
+
+**Reject pharmacist request**
+- DELETE /rejectPharmacistRequest/:UserName
+- Reject a pending pharmacist registration request by their username.
+
+**Accept pharmacist request**
+- POST /acceptPharmacistRequest/:UserName
+- Accept a pending pharmacist registration request by their username.
+
+**Get wallet balance**
+- GET /getWallet/:UserName
+- Retrieve the wallet balance of a user.
+
+**Pay with wallet balance**
+- PUT /payWithWallet/:UserName
+- Make a payment using the user's wallet balance.
+
+**View order history**
+- GET /viewOrders/:UserName
+- Retrieve the order history for a user.
+
+**Remove order**
+- DELETE /removeOrder/:UserName/:orderId
+- Remove a specific order from a user's order history.
+
+**Process payment**
+- POST /payment
+- Process a payment for an order.
+
+### Notifications
+
+**Create a new notification**
+- POST /createNotification
+- Create a new notification.
+
+**Delete a notification**
+- DELETE /deleteNotification/:notificationId
+- Delete a specific notification by its notification ID.
+
+**Get all notifications**
+- POST /getAllNotifications
+- Retrieve all notifications.
+
+### Conversations
+
+**Get conversation with a patient**
+- POST /getConversationPatient
+- Retrieve the conversation between a pharmacist and a patient.
+
+**Get conversation with a pharmacist**
+- POST /getConversationPharmacist
+- Retrieve the conversation between a patient and a pharmacist.
+
+**Send a message to a pharmacist**
+- POST /sendMessagePharmacist
+- Send a message to a pharmacist as part of a conversation.
+
+**Get messages**
+- POST /getMessages
+- Retrieve messages from a conversation.
+
+### Checkout with Card
+
+**Checkout with a card**
+- PUT /checkOutWithCard/:UserName
+- Perform a checkout with a card payment for the user.
+
+### Pharmacist Wallet
+
+**Get pharmacist's wallet balance**
+- GET /getWalletPharma/:UserName
+- Retrieve the wallet balance of a pharmacist.
+
+### Sales Reports
+
+**View sales report for a specific year and month**
+- GET /salesReport/:year/:month
+- Retrieve a sales report for a specific year and month.
+
+**Filter sales report by day for a specific year, month, and day**
+- GET /salesReport/:year/:month/:day
+- Filter and retrieve sales data for a specific year, month, and day.
+
+**Filter sales report by medicine name for a specific year and month**
+- GET /filterSalesReport/:year/:month/:name
+- Filter and retrieve sales data for a specific year, month, and medicine name.
 
 ## Tests
 
